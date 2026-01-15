@@ -1,4 +1,26 @@
 package com.company.controllers;
 
-public class UserController {
+import com.company.controllers.interfaces.IUserController;
+import com.company.models.User;
+import com.company.repositories.interfaces.IUserRepository;
+
+import java.util.List;
+
+public class UserController implements IUserController {
+    private final IUserRepository repo;
+
+    public UserController(IUserRepository repo) { // Dependency Injection
+        this.repo = repo;
+    }
+
+    public String getAllUsers() {
+        List<User> users = repo.getAllUsers();
+
+        StringBuilder response = new StringBuilder();
+        for (User user : users) {
+            response.append(user.toString()).append("\n");
+        }
+
+        return response.toString();
+    }
 }

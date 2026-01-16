@@ -34,7 +34,6 @@ public class UserRepository implements IUserRepository {
                         rs.getString("name"),
                         rs.getString("surname"),
                         rs.getDouble("bank"));
-
                 users.add(user);
             }
 

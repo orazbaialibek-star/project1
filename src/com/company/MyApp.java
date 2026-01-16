@@ -19,11 +19,9 @@ public class MyApp {
         System.out.println("Welcome to Bank accounts manager");
         System.out.println("Select option:");
         System.out.println("1. Get all users");
-        System.out.println("2. Get user by id");
-        System.out.println("3. Create user");
         System.out.println("0. Exit");
         System.out.println();
-        System.out.print("Enter option (1-3): ");
+        System.out.print("Enter option (0-1): ");
     }
 
     public void getAllUsersMenu() {

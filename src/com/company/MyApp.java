@@ -19,6 +19,7 @@ public class MyApp {
         System.out.println("Welcome to Bank accounts manager");
         System.out.println("Select option:");
         System.out.println("1. Get all users");
+        System.out.println("2. Get user by id");
         System.out.println("0. Exit");
         System.out.println();
         System.out.print("Enter option (0-1): ");
@@ -26,6 +27,14 @@ public class MyApp {
 
     public void getAllUsersMenu() {
         String response = controller.getAllUsers();
+        System.out.println(response);
+    }
+
+    public void getUserMenu() {
+        System.out.println("Please enter id");
+        int id = sc.nextInt();
+
+        String response = controller.getUser(id);
         System.out.println(response);
     }
 
@@ -37,6 +46,7 @@ public class MyApp {
 
                 switch (option){
                     case 1: getAllUsersMenu(); break;
+                    case 2: getUserMenu(); break;
                     default: return;
                 }
             } catch (InputMismatchException e) {

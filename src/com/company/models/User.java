@@ -4,7 +4,7 @@ public class User {
     private int id;
     private String name;
     private String surname;
-    private double bank;
+    private double balance;
 
     public User(String name, String surname, double bank) {
         setName(name);
@@ -35,11 +35,11 @@ public class User {
     public void setSurname(String surname) {
         this.surname = surname;
     }
-    public double getBank() {
-        return bank;
+    public double getBalance() {
+        return balance;
     }
-    public void setBank(double bank) {
-        this.bank = bank;
+    public void setBank(double balance) {
+        this.balance = balance;
     }
 
     @Override
@@ -48,7 +48,7 @@ public class User {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
-                ", gender=" + bank +
+                ", balance=" + balance +
                 '}';
     }
 }

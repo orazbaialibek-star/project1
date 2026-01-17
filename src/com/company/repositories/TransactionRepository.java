@@ -7,6 +7,8 @@ import com.company.repositories.interfaces.ITransactionRepository;
 import com.company.repositories.UserRepository;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TransactionRepository implements ITransactionRepository {
     private final IDB db;  // Dependency Injection
@@ -50,5 +52,31 @@ public class TransactionRepository implements ITransactionRepository {
         }
 
         return false;
+    }
+
+    public List<Transaction> getAllTransactions(){
+        Connection con = null;
+
+        try {
+            con = db.getConnection();
+            String sql = "SELECT id,userfromid,usertoid,amount FROM transactions";
+            Statement st = con.createStatement();
+
+            ResultSet rs = st.executeQuery(sql);
+            List<Transaction> transes = new ArrayList<>();
+            while (rs.next()) {
+                Transaction trans = new Transaction(rs.getInt("id"),
+                        rs.getInt("userfromid"),
+                        rs.getInt("usertoid"),
+                        rs.getInt("amount"));
+                transes.add(trans);
+            }
+
+            return transes;
+        } catch (SQLException e) {
+            System.out.println("sql error: " + e.getMessage());
+        }
+
+        return null;
     }
 }

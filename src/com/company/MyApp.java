@@ -24,7 +24,8 @@ public class MyApp {
         System.out.println("Select option:");
         System.out.println("1. Get all users");
         System.out.println("2. Get user by id");
-        System.out.println("3. Start Transaction");
+        System.out.println("3. Start transaction");
+        System.out.println("4. Get all transactions");
         System.out.println("0. Exit");
         System.out.println();
         System.out.print("Enter option (0-3): ");
@@ -55,6 +56,11 @@ public class MyApp {
         System.out.println(response);
     }
 
+    public void getAllTransactionsMenu() {
+        String response = transCont.getAllTransactions();
+        System.out.println(response);
+    }
+
     public void launch(){
         while (true) {
             mainMenu();
@@ -65,6 +71,7 @@ public class MyApp {
                     case 1: getAllUsersMenu(); break;
                     case 2: getUserMenu(); break;
                     case 3: getTransactionMenu(); break;
+                    case 4: getAllTransactionsMenu(); break;
                     default: return;
                 }
             } catch (InputMismatchException e) {

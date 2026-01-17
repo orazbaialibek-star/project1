@@ -1,6 +1,7 @@
 package com.company;
 
 import com.company.controllers.interfaces.IUserController;
+import com.company.controllers.interfaces.ITransactionController;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -8,10 +9,13 @@ import java.util.Scanner;
 public class MyApp {
     private final Scanner sc = new Scanner(System.in);
 
-    private final IUserController controller;
+    private final IUserController userCont;
 
-    public MyApp(IUserController controller) {
-        this.controller = controller;
+    private final ITransactionController transCont;
+
+    public MyApp(IUserController userCont, ITransactionController transCont) {
+        this.userCont = userCont;
+        this.transCont = transCont;
     }
 
     private void mainMenu() {
@@ -20,13 +24,14 @@ public class MyApp {
         System.out.println("Select option:");
         System.out.println("1. Get all users");
         System.out.println("2. Get user by id");
+        System.out.println("3. Start Transaction");
         System.out.println("0. Exit");
         System.out.println();
-        System.out.print("Enter option (0-1): ");
+        System.out.print("Enter option (0-3): ");
     }
 
     public void getAllUsersMenu() {
-        String response = controller.getAllUsers();
+        String response = userCont.getAllUsers();
         System.out.println(response);
     }
 
@@ -34,7 +39,19 @@ public class MyApp {
         System.out.println("Please enter id");
         int id = sc.nextInt();
 
-        String response = controller.getUser(id);
+        String response = userCont.getUser(id);
+        System.out.println(response);
+    }
+
+    public void getTransactionMenu(){
+        System.out.println("Please enter first users id");
+        int user1 = sc.nextInt();
+        System.out.println("Please enter second users id");
+        int user2 = sc.nextInt();
+        System.out.println("Please enter the amount");
+        int amount = sc.nextInt();
+
+        String response = transCont.userTransaction(user1, user2, amount);
         System.out.println(response);
     }
 
@@ -47,6 +64,7 @@ public class MyApp {
                 switch (option){
                     case 1: getAllUsersMenu(); break;
                     case 2: getUserMenu(); break;
+                    case 3: getTransactionMenu(); break;
                     default: return;
                 }
             } catch (InputMismatchException e) {

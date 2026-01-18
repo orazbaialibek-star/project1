@@ -16,29 +16,6 @@ public class UserRepository implements IUserRepository {
     }
 
     @Override
-    public boolean createUser(User user) {
-        Connection con = null;
-
-        try {
-            con = db.getConnection();
-            String sql = "INSERT INTO users(name,surname,gender) VALUES (?,?,?)";
-            PreparedStatement st = con.prepareStatement(sql);
-
-            st.setString(1, user.getName());
-            st.setString(2, user.getSurname());
-            st.setBoolean(3, user.getGender());
-
-            st.execute();
-
-            return true;
-        } catch (SQLException e) {
-            System.out.println("sql error: " + e.getMessage());
-        }
-
-        return false;
-    }
-    
-    @Override
     public List<User> getAllUsers() {
         Connection con = null;
 
@@ -63,6 +40,29 @@ public class UserRepository implements IUserRepository {
         }
 
         return null;
+    }
+
+    @Override
+    public boolean createUser(User user) {
+        Connection con = null;
+
+        try {
+            con = db.getConnection();
+            String sql = "INSERT INTO users(name,surname,balance) VALUES (?,?,?)";
+            PreparedStatement st = con.prepareStatement(sql);
+
+            st.setString(1, user.getName());
+            st.setString(2, user.getSurname());
+            st.setDouble(3, user.getBalance());
+
+            st.execute();
+
+            return true;
+        } catch (SQLException e) {
+            System.out.println("sql error: " + e.getMessage());
+        }
+
+        return false;
     }
 
     @Override
@@ -114,7 +114,7 @@ public class UserRepository implements IUserRepository {
             int rowsDeleted = deleteSt.executeUpdate();
 
             if (rowsDeleted > 0) {
-                System.out.println("✅ User with ID " + id + " deleted successfully!");
+                System.out.println(" User with ID " + id + " deleted successfully!");
                 System.out.println("Note: All transactions related to this user were also deleted (CASCADE).");
                 return true;
             } else {

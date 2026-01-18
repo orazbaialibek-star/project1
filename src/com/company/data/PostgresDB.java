@@ -27,8 +27,6 @@ public class PostgresDB implements IDB {
                 return connection;
             }
 
-            Class.forName("org.postgresql.Driver");
-
             connection = DriverManager.getConnection(connectionUrl, username, password);
 
             return connection;

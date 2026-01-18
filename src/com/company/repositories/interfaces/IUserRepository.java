@@ -8,4 +8,5 @@ public interface IUserRepository {
     List<User> getAllUsers();
     User getUser(int id);
     boolean deleteUser(int id);
+    boolean createUser(User user);
 }

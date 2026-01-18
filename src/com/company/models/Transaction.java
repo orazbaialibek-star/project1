@@ -45,10 +45,10 @@ public class Transaction {
     @Override
     public String toString(){
         return "Transaction{" +
-                "id=" + id +
-                ", from user='" + userFrom + '\'' +
-                ", to user='" + userTo + '\'' +
-                ", with sent amount of=" + amount +
+                "id=" + getId() +
+                ", from user='" + getUserFrom() + '\'' +
+                ", to user='" + getUserTo() + '\'' +
+                ", with sent amount of=" + getAmount() +
                 '}';
     }
 }

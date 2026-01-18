@@ -12,15 +12,14 @@ public class UserController implements IUserController {
     public UserController(IUserRepository repo) { // Dependency Injection
         this.repo = repo;
     }
-    public String createUser(String name, String surname, String gender) {
-        boolean male = gender.equalsIgnoreCase("male");
-        User user = new User(name, surname, male);
+
+    public String createUser(String name, String surname, double balance) {
+        User user = new User(name, surname, balance);
 
         boolean created = repo.createUser(user);
 
         return (created ? "User was created!" : "User creation was failed!");
     }
-
     public String getAllUsers() {
         List<User> users = repo.getAllUsers();
 
@@ -37,10 +36,10 @@ public class UserController implements IUserController {
 
         return (user == null ? "User was not found!" : user.toString());
     }
+
     public String deleteUser(int id) {
         boolean deleted = repo.deleteUser(id);
 
         return (deleted ? "User was deleted successfully!" : "User deletion failed!");
     }
-
 }

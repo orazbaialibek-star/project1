@@ -22,7 +22,6 @@ public class TransactionRepository implements ITransactionRepository {
         Connection con = null;
 
         try {
-
             if (trans.getAmount() <= 0) {
                 return false;
             }
@@ -30,6 +29,18 @@ public class TransactionRepository implements ITransactionRepository {
             if (trans.getUserTo() == 0 || trans.getUserFrom() == 0) {
                 return false;
             }
+
+            String checkSQL = "SELECT balance FROM users WHERE id = ?";
+            PreparedStatement stCheckBalance = con.prepareStatement(checkSQL);
+            stCheckBalance.setInt(1, trans.getUserFrom());
+            ResultSet rs = stCheckBalance.executeQuery();
+
+
+            double balance = rs.getDouble("balance");
+            if (balance < trans.getAmount()) {
+                return false;
+            }
+
 
             con = db.getConnection();
             String sql1 = "INSERT INTO transactions (userfromid, usertoid, amount) VALUES (?, ?, ?)";

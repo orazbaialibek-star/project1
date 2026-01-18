@@ -61,6 +61,14 @@ public class MyApp {
         System.out.println(response);
     }
 
+    public void deleteUserMenu() {
+        System.out.println("Please enter id");
+        int id = sc.nextInt();
+
+        String response = userCont.deleteUser(id);
+        System.out.println(response);
+    }
+
     public void launch(){
         while (true) {
             mainMenu();
@@ -72,11 +80,12 @@ public class MyApp {
                     case 2: getUserMenu(); break;
                     case 3: getTransactionMenu(); break;
                     case 4: getAllTransactionsMenu(); break;
+                    case 5: deleteUserMenu(); break;
                     default: return;
                 }
             } catch (InputMismatchException e) {
                 System.out.println("Input must be integer: " + e);
-                sc.nextLine(); // to ignore incorrect input
+                sc.nextLine();
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }

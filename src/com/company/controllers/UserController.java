@@ -11,8 +11,7 @@ public class UserController implements IUserController {
 
     public UserController(IUserRepository repo) { // Dependency Injection
         this.repo = repo;
-    }
-
+    } //Aishas changes
     public String getAllUsers() {
         List<User> users = repo.getAllUsers();
 
@@ -22,11 +21,17 @@ public class UserController implements IUserController {
         }
 
         return response.toString();
-    }
+    } //Dias changes (his pc was bad)
 
     public String getUser(int id){
         User user = repo.getUser(id);
 
         return (user == null ? "User was not found!" : user.toString());
+    }
+
+    public String deleteUser(int id) {
+        boolean deleted = repo.deleteUser(id);
+
+        return (deleted ? "User was deleted successfully!" : "User deletion failed!");
     }
 }

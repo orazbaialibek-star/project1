@@ -12,6 +12,14 @@ public class UserController implements IUserController {
     public UserController(IUserRepository repo) { // Dependency Injection
         this.repo = repo;
     }
+    public String createUser(String name, String surname, String gender) {
+        boolean male = gender.equalsIgnoreCase("male");
+        User user = new User(name, surname, male);
+
+        boolean created = repo.createUser(user);
+
+        return (created ? "User was created!" : "User creation was failed!");
+    }
 
     public String getAllUsers() {
         List<User> users = repo.getAllUsers();

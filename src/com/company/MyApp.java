@@ -76,7 +76,7 @@ public class MyApp {
         String name = sc.next();
         System.out.println("Please enter surname");
         String surname = sc.next();
-        System.out.println("Please enter gender (male/female)");
+        System.out.println("Please enter the balance");
         int balance = sc.nextInt();
 
         String response = userCont.createUser(name, surname, balance);

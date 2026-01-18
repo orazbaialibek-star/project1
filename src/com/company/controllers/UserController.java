@@ -29,4 +29,10 @@ public class UserController implements IUserController {
 
         return (user == null ? "User was not found!" : user.toString());
     }
+    public String deleteUser(int id) {
+        boolean deleted = repo.deleteUser(id);
+
+        return (deleted ? "User was deleted successfully!" : "User deletion failed!");
+    }
+
 }

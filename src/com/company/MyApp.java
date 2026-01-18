@@ -82,4 +82,11 @@ public class MyApp {
             }
         }
     }
+    public void deleteUserMenu() {
+        System.out.println("Please enter id");
+        int id = sc.nextInt();
+
+        String response = userCont.deleteUser(id);
+        System.out.println(response);
+    }
 }

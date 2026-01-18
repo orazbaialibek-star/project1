@@ -22,6 +22,15 @@ public class TransactionRepository implements ITransactionRepository {
         Connection con = null;
 
         try {
+
+            if (trans.getAmount() <= 0) {
+                return false;
+            }
+
+            if (trans.getUserTo() == 0 || trans.getUserFrom() == 0) {
+                return false;
+            }
+
             con = db.getConnection();
             String sql1 = "INSERT INTO transactions (userfromid, usertoid, amount) VALUES (?, ?, ?)";
             PreparedStatement st1 = con.prepareStatement(sql1);

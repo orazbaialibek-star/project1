@@ -31,8 +31,6 @@ public class TransactionController implements ITransactionController {
 
         boolean created = repo.userTransaction(trans);
 
-        return (created ? "Transaction occured successfully" : "stfu");
-//        Transaction trans = new Transaction(user1, user2, amount);
-//        return (trans == null ? "User was not found!" : trans.toString());
+        return (created ? "Transaction occured successfully" : "Transaction failed");
     }
 }

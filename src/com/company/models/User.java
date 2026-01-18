@@ -45,10 +45,10 @@ public class User {
     @Override
     public String toString(){
         return "User{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
-                ", balance=" + balance +
+                "id=" + getId() +
+                ", name='" + getName() + '\'' +
+                ", surname='" + getSurname() + '\'' +
+                ", balance=" + getBalance() +
                 '}';
     }
 }

@@ -16,6 +16,29 @@ public class UserRepository implements IUserRepository {
     }
 
     @Override
+    public boolean createUser(User user) {
+        Connection con = null;
+
+        try {
+            con = db.getConnection();
+            String sql = "INSERT INTO users(name,surname,gender) VALUES (?,?,?)";
+            PreparedStatement st = con.prepareStatement(sql);
+
+            st.setString(1, user.getName());
+            st.setString(2, user.getSurname());
+            st.setBoolean(3, user.getGender());
+
+            st.execute();
+
+            return true;
+        } catch (SQLException e) {
+            System.out.println("sql error: " + e.getMessage());
+        }
+
+        return false;
+    }
+    
+    @Override
     public List<User> getAllUsers() {
         Connection con = null;
 

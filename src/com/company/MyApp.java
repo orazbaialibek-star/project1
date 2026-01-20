@@ -24,13 +24,13 @@ public class MyApp {
         System.out.println("Select option:");
         System.out.println("1. Get all users");
         System.out.println("2. Get user by id");
-        System.out.println("3. Start transaction");
+        System.out.println("3. Start transaction between users");
         System.out.println("4. Get all transactions");
         System.out.println("5. Create user");
         System.out.println("6. Delete user");
         System.out.println("0. Exit");
         System.out.println();
-        System.out.print("Enter option (0-5): ");
+        System.out.print("Enter option (0-6): ");
     }
 
     public void getAllUsersMenu() {

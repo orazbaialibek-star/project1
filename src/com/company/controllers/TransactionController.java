@@ -2,9 +2,8 @@ package com.company.controllers;
 
 import com.company.controllers.interfaces.ITransactionController;
 import com.company.models.Transaction;
-import com.company.models.User;
 import com.company.repositories.interfaces.ITransactionRepository;
-import com.company.repositories.interfaces.IUserRepository;
+
 
 import java.util.List;
 

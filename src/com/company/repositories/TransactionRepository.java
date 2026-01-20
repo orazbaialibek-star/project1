@@ -2,9 +2,7 @@ package com.company.repositories;
 
 import com.company.data.interfaces.IDB;
 import com.company.models.Transaction;
-import com.company.models.User;
 import com.company.repositories.interfaces.ITransactionRepository;
-import com.company.repositories.UserRepository;
 
 import java.sql.*;
 import java.util.ArrayList;

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TransactionRepository implements ITransactionRepository {
-    private final IDB db;  // Dependency Injection
+    private final IDB db;
 
     public TransactionRepository(IDB db) {
         this.db = db;

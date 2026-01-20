@@ -97,40 +97,20 @@ public class UserRepository implements IUserRepository {
         try {
             con = db.getConnection();
 
-            String checkSql = "SELECT id FROM users WHERE id = ?";
-            PreparedStatement checkSt = con.prepareStatement(checkSql);
-            checkSt.setInt(1, id);
-            ResultSet rs = checkSt.executeQuery();
-
-            if (!rs.next()) {
-                System.out.println("User with ID " + id + " not found!");
-                return false;
-            }
-
             String deleteSql = "DELETE FROM users WHERE id = ?";
-            PreparedStatement deleteSt = con.prepareStatement(deleteSql);
-            deleteSt.setInt(1, id);
+            PreparedStatement st = con.prepareStatement(deleteSql);
+            st.setInt(1, id);
 
-            int rowsDeleted = deleteSt.executeUpdate();
+            int rows = st.executeUpdate();
 
-            if (rowsDeleted > 0) {
-                System.out.println(" User with ID " + id + " deleted successfully!");
-                System.out.println("Note: All transactions related to this user were also deleted (CASCADE).");
+            if (rows > 0){
                 return true;
             } else {
-                System.out.println("Failed to delete user with ID " + id);
                 return false;
             }
-
         } catch (SQLException e) {
             System.out.println("SQL error in deleteUser: " + e.getMessage());
             return false;
-        } finally {
-            try {
-                if (con != null) con.close();
-            } catch (SQLException e) {
-                System.out.println("Connection close error: " + e.getMessage());
-            }
         }
     }
 }

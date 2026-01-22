@@ -20,6 +20,8 @@ public class TransactionRepository implements ITransactionRepository {
         Connection con = null;
 
         try {
+            con = db.getConnection();
+
             if (trans.getAmount() <= 0) {
                 return false;
             }
@@ -28,19 +30,6 @@ public class TransactionRepository implements ITransactionRepository {
                 return false;
             }
 
-            String checkSQL = "SELECT balance FROM users WHERE id = ?";
-            PreparedStatement stCheckBalance = con.prepareStatement(checkSQL);
-            stCheckBalance.setInt(1, trans.getUserFrom());
-            ResultSet rs = stCheckBalance.executeQuery();
-
-
-            double balance = rs.getDouble("balance");
-            if (balance < trans.getAmount()) {
-                return false;
-            }
-
-
-            con = db.getConnection();
             String sql1 = "INSERT INTO transactions (userfromid, usertoid, amount) VALUES (?, ?, ?)";
             PreparedStatement st1 = con.prepareStatement(sql1);
 
@@ -50,19 +39,15 @@ public class TransactionRepository implements ITransactionRepository {
 
             st1.execute();
 
-            String sql2 = "UPDATE users SET balance = balance - ? WHERE id = ?";
+            String sql2 = "BEGIN; UPDATE users SET balance = balance - ? WHERE id = ?; UPDATE users SET balance = balance + ? WHERE id = ?; COMMIT;";
             PreparedStatement st2 = con.prepareStatement(sql2);
 
             st2.setInt(1,trans.getAmount());
             st2.setInt(2,trans.getUserFrom());
+            st2.setInt(3, trans.getAmount());
+            st2.setInt(4, trans.getUserTo());
 
             st2.execute();
-
-            String sql3 = "UPDATE users SET balance = balance + ? WHERE id = ?";
-            PreparedStatement st3 = con.prepareStatement(sql3);
-            st3.setInt(1, trans.getAmount());
-            st3.setInt(2, trans.getUserTo());
-            st3.execute();
 
             return true;
         } catch(SQLException e) {

@@ -6,14 +6,14 @@ public class User {
     private String surname;
     private double balance;
 
-    public User(String name, String surname, double bank) {
+    public User(String name, String surname, double balance) {
         setName(name);
         setSurname(surname);
-        setBank(bank);
+        setBank(balance);
     }
 
-    public User(int id, String name, String surname, double bank) {
-        this(name, surname, bank);
+    public User(int id, String name, String surname, double balance) {
+        this(name, surname, balance);
         setId(id);
     }
 

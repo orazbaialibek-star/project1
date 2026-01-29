@@ -48,12 +48,14 @@ public class UserRepository implements IUserRepository {
 
         try {
             con = db.getConnection();
-            String sql = "INSERT INTO users(name,surname,balance) VALUES (?,?,?)";
+            String sql = "INSERT INTO users(name,surname,balance,login,password) VALUES (?,?,?,?,?)";
             PreparedStatement st = con.prepareStatement(sql);
 
             st.setString(1, user.getName());
             st.setString(2, user.getSurname());
             st.setDouble(3, user.getBalance());
+            st.setString(4, user.getLogin());
+            st.setString(5, user.getPasword());
 
             st.execute();
 

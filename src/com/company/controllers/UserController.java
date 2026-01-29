@@ -13,8 +13,8 @@ public class UserController implements IUserController {
         this.repo = repo;
     }
 
-    public String createUser(String name, String surname, double balance) {
-        User user = new User(name, surname, balance);
+    public String createUser(String name, String surname, double balance, String login, String password) {
+        User user = new User(name, surname, balance, login, password);
 
         boolean created = repo.createUser(user);
 

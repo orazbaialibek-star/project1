@@ -12,11 +12,16 @@ public class User {
         setName(name);
         setSurname(surname);
         setBank(balance);
+        setLogin(login);
+        setPassword(password);
     }
 
     public User(int id, String name, String surname, double balance, String login, String password) {
         this(name, surname, balance, login, password);
         setId(id);
+    }
+
+    public User(int id, String name, String surname, double balance) {
     }
 
     public int getId() {

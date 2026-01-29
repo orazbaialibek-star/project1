@@ -99,8 +99,12 @@ public class MyApp {
         String surname = sc.next();
         System.out.println("Please enter the balance");
         int balance = sc.nextInt();
+        System.out.println("Please enter the login");
+        String login = sc.next();
+        System.out.println("Please enter the password");
+        String password = sc.next();
 
-        String response = userCont.createUser(name, surname, balance);
+        String response = userCont.createUser(name, surname, balance, login, password);
         System.out.println(response);
     }
 

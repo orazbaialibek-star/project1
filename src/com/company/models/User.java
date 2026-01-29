@@ -5,15 +5,17 @@ public class User {
     private String name;
     private String surname;
     private double balance;
+    private String login;
+    private String password;
 
-    public User(String name, String surname, double balance) {
+    public User(String name, String surname, double balance, String login, String password) {
         setName(name);
         setSurname(surname);
         setBank(balance);
     }
 
-    public User(int id, String name, String surname, double balance) {
-        this(name, surname, balance);
+    public User(int id, String name, String surname, double balance, String login, String password) {
+        this(name, surname, balance, login, password);
         setId(id);
     }
 
@@ -40,6 +42,18 @@ public class User {
     }
     public void setBank(double balance) {
         this.balance = balance;
+    }
+    public String getLogin(){
+        return login;
+    }
+    public void setLogin(String login){
+        this.login = login;
+    }
+    public String getPasword(){
+        return password;
+    }
+    public void setPassword(String password){
+        this.password = password;
     }
 
     @Override

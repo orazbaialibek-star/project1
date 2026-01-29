@@ -18,7 +18,7 @@ public class MyApp {
         this.transCont = transCont;
     }
 
-    private void mainMenu() {
+    private void mainMenuAdmin() {
         System.out.println();
         System.out.println("Welcome to Bank accounts manager");
         System.out.println("Select option:");
@@ -31,6 +31,27 @@ public class MyApp {
         System.out.println("0. Exit");
         System.out.println();
         System.out.print("Enter option (0-6): ");
+    }
+
+    private void mainMenuUser() {
+        System.out.println();
+        System.out.println("Welcome");
+        System.out.println("Select option:");
+        System.out.println("1. Start transaction between users");
+        System.out.println("2. Get all my transactions");
+        System.out.println("0. Exit");
+        System.out.println();
+        System.out.print("Enter option (0-3): ");
+    }
+
+    private void mainMenu(){
+        System.out.println();
+        System.out.println("Select a role");
+        System.out.println("1. Admin");
+        System.out.println("2. User");
+        System.out.println("0. Exit");
+        System.out.println();
+        System.out.print("Enter option (0-2): ");
     }
 
     public void getAllUsersMenu() {
@@ -90,12 +111,52 @@ public class MyApp {
                 int option = sc.nextInt();
 
                 switch (option){
+                    case 1: launchForAdmin(); break;
+                    case 2: launchForUser(); break;
+                    default: return;
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Input must be integer: " + e);
+                sc.nextLine();
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    public void launchForAdmin(){
+        while (true) {
+            mainMenuAdmin();
+            try {
+                int option = sc.nextInt();
+
+                switch (option){
                     case 1: getAllUsersMenu(); break;
                     case 2: getUserMenu(); break;
                     case 3: getTransactionMenu(); break;
                     case 4: getAllTransactionsMenu(); break;
                     case 5: createUserMenu(); break;
                     case 6: deleteUserMenu(); break;
+                    default: return;
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Input must be integer: " + e);
+                sc.nextLine();
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    public void launchForUser(){
+        while (true) {
+            mainMenuUser();
+            try {
+                int option = sc.nextInt();
+
+                switch (option){
+                    case 1: getTransactionMenu(); break;
+                    case 2: getAllTransactionsMenu(); break;
                     default: return;
                 }
             } catch (InputMismatchException e) {

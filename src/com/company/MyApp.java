@@ -1,5 +1,6 @@
 package com.company;
 
+import com.company.controllers.interfaces.IAuthorisationController;
 import com.company.controllers.interfaces.IUserController;
 import com.company.controllers.interfaces.ITransactionController;
 
@@ -13,9 +14,28 @@ public class MyApp {
 
     private final ITransactionController transCont;
 
-    public MyApp(IUserController userCont, ITransactionController transCont) {
+    private final IAuthorisationController authCont;
+
+    public MyApp(IUserController userCont, ITransactionController transCont, IAuthorisationController authCont) {
         this.userCont = userCont;
         this.transCont = transCont;
+        this.authCont = authCont;
+    }
+
+    public void authorisation(){
+        System.out.println("Please enter the login");
+        String login = sc.next();
+        System.out.println("Please enter the password");
+        String password = sc.next();
+
+        String responce = authCont.checkLogPas_Admin(login, password);
+        System.out.println(responce);
+        if (responce !=null){
+            launchForAdmin();
+            System.out.println(responce);
+        } if (responce == null){
+            System.out.println("An error occured");
+        }
     }
 
     private void mainMenuAdmin() {
@@ -46,12 +66,11 @@ public class MyApp {
 
     private void mainMenu(){
         System.out.println();
-        System.out.println("Select a role");
-        System.out.println("1. Admin");
-        System.out.println("2. User");
+        System.out.println("Welcome to MyBank");
+        System.out.println("1. Log-in");
         System.out.println("0. Exit");
         System.out.println();
-        System.out.print("Enter option (0-2): ");
+        System.out.print("Enter option (0-1): ");
     }
 
     public void getAllUsersMenu() {
@@ -115,8 +134,7 @@ public class MyApp {
                 int option = sc.nextInt();
 
                 switch (option){
-                    case 1: launchForAdmin(); break;
-                    case 2: launchForUser(); break;
+                    case 1: authorisation(); break;
                     default: return;
                 }
             } catch (InputMismatchException e) {

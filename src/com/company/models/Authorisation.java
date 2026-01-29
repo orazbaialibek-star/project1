@@ -2,18 +2,18 @@ package com.company.models;
 
 public class Authorisation {
     private String login;
-    private int password;
+    private String password;
 
-    public Authorisation(String login, int password){
+    public Authorisation(String login, String password){
         setLogin(login);
         setPassword(password);
     }
 
-    public int getPassword() {
+    public String getPassword() {
         return password;
     }
 
-    public void setPassword(int password) {
+    public void setPassword(String password) {
         this.password = password;
     }
 

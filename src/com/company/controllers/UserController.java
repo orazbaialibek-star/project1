@@ -24,9 +24,7 @@ public class UserController implements IUserController {
         List<User> users = repo.getAllUsers();
 
         StringBuilder response = new StringBuilder();
-        for (User user : users) {
-            response.append(user.toString()).append("\n");
-        }
+        users.forEach(user -> response.append(user).append("\n"));
 
         return response.toString();
     }

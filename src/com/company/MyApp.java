@@ -22,23 +22,27 @@ public class MyApp {
         this.authCont = authCont;
     }
 
+    public int currentUserId = 0;
+
     public void authorisation(){
         System.out.println("Please enter the login");
         String login = sc.next();
         System.out.println("Please enter the password");
         String password = sc.next();
 
-        String responce1 = authCont.checkLogPas_Admin(login, password);
+        String responce1 = authCont.checkLogPas(login, password);
         int responce2 = authCont.checkRole(login);
+        int responce3 = authCont.checkId(login);
         System.out.println(responce1);
         if (responce1 !=null){
+            currentUserId = responce3;
             if (responce2 == 1){
                 launchForAdmin();
             }
             if (responce2 == 2){
                 launchForUser();
             }
-            System.out.println(responce1);
+            System.out.println(responce1 + currentUserId);
         } if (responce1 == null){
             System.out.println("An error occured");
         }
@@ -92,15 +96,14 @@ public class MyApp {
         System.out.println(response);
     }
 
-    public void getTransactionMenu(){
-        System.out.println("Please enter first users id");
-        int user1 = sc.nextInt();
+    public void startTransactionMenu(){
+        int user1 = currentUserId;
         System.out.println("Please enter second users id");
         int user2 = sc.nextInt();
         System.out.println("Please enter the amount");
         int amount = sc.nextInt();
 
-        String response = transCont.userTransaction(user1, user2, amount);
+        String response = transCont.userTransaction_admin(user1, user2, amount);
         System.out.println(response);
     }
 
@@ -128,8 +131,10 @@ public class MyApp {
         String login = sc.next();
         System.out.println("Please enter the password");
         String password = sc.next();
+        System.out.println("Please enter the role(1 is for admin and 2 is for user");
+        int role = sc.nextInt();
 
-        String response = userCont.createUser(name, surname, balance, login, password);
+        String response = userCont.createUser(name, surname, balance, login, password, role);
         System.out.println(response);
     }
 
@@ -161,7 +166,7 @@ public class MyApp {
                 switch (option){
                     case 1: getAllUsersMenu(); break;
                     case 2: getUserMenu(); break;
-                    case 3: getTransactionMenu(); break;
+                    case 3: startTransactionMenu(); break;
                     case 4: getAllTransactionsMenu(); break;
                     case 5: createUserMenu(); break;
                     case 6: deleteUserMenu(); break;
@@ -183,7 +188,7 @@ public class MyApp {
                 int option = sc.nextInt();
 
                 switch (option){
-                    case 1: getTransactionMenu(); break;
+                    case 1: startTransactionMenu(); break;
                     case 2: getAllTransactionsMenu(); break;
                     default: return;
                 }

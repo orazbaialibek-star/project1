@@ -15,8 +15,7 @@ public class TransactionRepository implements ITransactionRepository {
         this.db = db;
     }
 
-    @Override
-    public boolean userTransaction(Transaction trans){
+    public boolean userTransaction_admin(Transaction trans){
         Connection con = null;
 
         try {
@@ -53,7 +52,6 @@ public class TransactionRepository implements ITransactionRepository {
         } catch(SQLException e) {
             System.out.println("sql error: " + e.getMessage());
         }
-
         return false;
     }
 

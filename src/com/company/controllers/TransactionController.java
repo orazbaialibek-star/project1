@@ -25,10 +25,10 @@ public class TransactionController implements ITransactionController {
         this.repo = repo;
     }
 
-    public String userTransaction(int user1, int user2, int amount){
+    public String userTransaction_admin(int user1, int user2, int amount){
         Transaction trans = new Transaction(user1, user2, amount);
 
-        boolean created = repo.userTransaction(trans);
+        boolean created = repo.userTransaction_admin(trans);
 
         return (created ? "Transaction occured successfully" : "Transaction failed");
     }

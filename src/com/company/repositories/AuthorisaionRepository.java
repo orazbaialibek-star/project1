@@ -19,8 +19,31 @@ public class AuthorisaionRepository implements IAuthorisationRepository{
 
     public int role;
 
-    public int getRole() {
-        return role;
+    public String login;
+
+    public int id;
+
+    public int checkId(String login){
+        Connection con = null;
+
+        try {
+
+            con = db.getConnection();
+            String sql1 = "SELECT id FROM users WHERE login=?";
+            PreparedStatement st1 = con.prepareStatement(sql1);
+
+            st1.setString(1,login);
+
+            ResultSet rs1 = st1.executeQuery();
+
+            if(rs1.next()){
+                id = rs1.getInt("id");
+            }
+        } catch (SQLException e) {
+            System.out.println("sql error: " + e.getMessage());
+            return 0;
+        }
+        return id;
     }
 
     public int checkRole(String login){
@@ -29,16 +52,15 @@ public class AuthorisaionRepository implements IAuthorisationRepository{
         try {
 
             con = db.getConnection();
-            String sql3 = "SELECT role FROM users WHERE login=?";
-            PreparedStatement st3 = con.prepareStatement(sql3);
+            String sql1 = "SELECT role FROM users WHERE login=?";
+            PreparedStatement st1 = con.prepareStatement(sql1);
 
-            st3.setString(1,login);
+            st1.setString(1,login);
 
-            ResultSet rs3 = st3.executeQuery();
+            ResultSet rs1 = st1.executeQuery();
 
-            if(rs3.next()){
-                role = rs3.getInt("role");
-                return role;
+            if(rs1.next()){
+                role = rs1.getInt("role");
             }
         } catch (SQLException e) {
             System.out.println("sql error: " + e.getMessage());
@@ -47,26 +69,41 @@ public class AuthorisaionRepository implements IAuthorisationRepository{
         return role;
     }
 
-    public boolean checkLogPas_Admin(String login, String password){
+    public String checkLogin(String login){
         Connection con = null;
 
         try {
 
             con = db.getConnection();
             String sql1 = "SELECT login FROM users WHERE login=?";
-            String sql3 = "SELECT role FROM users WHERE login=?";
             PreparedStatement st1 = con.prepareStatement(sql1);
-            PreparedStatement st3 = con.prepareStatement(sql3);
 
             st1.setString(1,login);
-            st3.setString(1,login);
 
             ResultSet rs1 = st1.executeQuery();
-            ResultSet rs3 = st3.executeQuery();
 
-            if(rs3.next()){
-                role = rs3.getInt("role");
+            if(rs1.next()){
+                login = rs1.getString("login");
             }
+        } catch (SQLException e) {
+            System.out.println("sql error: " + e.getMessage());
+            return null;
+        }
+        return login;
+    }
+
+    public boolean checkLogPas(String login, String password){
+        Connection con = null;
+
+        try {
+
+            con = db.getConnection();
+            String sql1 = "SELECT login FROM users WHERE login=?";
+            PreparedStatement st1 = con.prepareStatement(sql1);
+
+            st1.setString(1,login);
+
+            ResultSet rs1 = st1.executeQuery();
 
             String sql2 = "SELECT password FROM users WHERE password=?";
             PreparedStatement st2 = con.prepareStatement(sql2);

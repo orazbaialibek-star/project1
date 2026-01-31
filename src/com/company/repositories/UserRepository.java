@@ -21,7 +21,7 @@ public class UserRepository implements IUserRepository {
 
         try {
             con = db.getConnection();
-            String sql = "SELECT id,name,surname,balance FROM users";
+            String sql = "SELECT id,name,surname,balance,login,password,role FROM users";
             Statement st = con.createStatement();
 
             ResultSet rs = st.executeQuery(sql);
@@ -30,7 +30,10 @@ public class UserRepository implements IUserRepository {
                 User user = new User(rs.getInt("id"),
                         rs.getString("name"),
                         rs.getString("surname"),
-                        rs.getDouble("balance"));
+                        rs.getDouble("balance"),
+                        rs.getString("login"),
+                        rs.getString("password"),
+                        rs.getInt("role"));
                 users.add(user);
             }
 
@@ -48,7 +51,7 @@ public class UserRepository implements IUserRepository {
 
         try {
             con = db.getConnection();
-            String sql = "INSERT INTO users(name,surname,balance,login,password) VALUES (?,?,?,?,?)";
+            String sql = "INSERT INTO users(name,surname,balance,login,password,role) VALUES (?,?,?,?,?,?)";
             PreparedStatement st = con.prepareStatement(sql);
 
             st.setString(1, user.getName());
@@ -56,6 +59,7 @@ public class UserRepository implements IUserRepository {
             st.setDouble(3, user.getBalance());
             st.setString(4, user.getLogin());
             st.setString(5, user.getPasword());
+            st.setInt(6,user.getRole());
 
             st.execute();
 
@@ -84,7 +88,10 @@ public class UserRepository implements IUserRepository {
                 return new User(rs.getInt("id"),
                         rs.getString("name"),
                         rs.getString("surname"),
-                        rs.getDouble("balance"));
+                        rs.getDouble("balance"),
+                        rs.getString("login"),
+                        rs.getString("password"),
+                        rs.getInt("role"));
             }
         } catch (SQLException e) {
             System.out.println("sql error: " + e.getMessage());

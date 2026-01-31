@@ -7,21 +7,23 @@ public class User {
     private double balance;
     private String login;
     private String password;
+    private int role;
 
-    public User(String name, String surname, double balance, String login, String password) {
+    public User(String name, String surname, double balance, String login, String password, int role) {
         setName(name);
         setSurname(surname);
-        setBank(balance);
+        setBalance(balance);
         setLogin(login);
         setPassword(password);
+        setRole(role);
     }
 
-    public User(int id, String name, String surname, double balance, String login, String password) {
-        this(name, surname, balance, login, password);
+    public User(int id, String name, String surname, double balance, String login, String password, int role) {
+        this(name, surname, balance, login, password, role);
         setId(id);
     }
 
-    public User(int id, String name, String surname, double balance) {
+    public User(int id, String name, String surname, double balance, String login, int role) {
     }
 
     public int getId() {
@@ -45,9 +47,16 @@ public class User {
     public double getBalance() {
         return balance;
     }
-    public void setBank(double balance) {
+    public void setBalance(double balance) {
         this.balance = balance;
     }
+    public int getRole(){
+        return role;
+    }
+    public void setRole(int role){
+        this.role = role;
+    }
+
     public String getLogin(){
         return login;
     }
@@ -67,7 +76,9 @@ public class User {
                 "id=" + getId() +
                 ", name='" + getName() + '\'' +
                 ", surname='" + getSurname() + '\'' +
-                ", balance=" + getBalance() +
+                ", balance=" + getBalance() + '\'' +
+                ", login=" + getLogin() + '\'' +
+                ", role=" + getRole() + '\'' +
                 '}';
     }
 }

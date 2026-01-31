@@ -28,12 +28,18 @@ public class MyApp {
         System.out.println("Please enter the password");
         String password = sc.next();
 
-        String responce = authCont.checkLogPas_Admin(login, password);
-        System.out.println(responce);
-        if (responce !=null){
-            launchForAdmin();
-            System.out.println(responce);
-        } if (responce == null){
+        String responce1 = authCont.checkLogPas_Admin(login, password);
+        int responce2 = authCont.checkRole(login);
+        System.out.println(responce1);
+        if (responce1 !=null){
+            if (responce2 == 1){
+                launchForAdmin();
+            }
+            if (responce2 == 2){
+                launchForUser();
+            }
+            System.out.println(responce1);
+        } if (responce1 == null){
             System.out.println("An error occured");
         }
     }

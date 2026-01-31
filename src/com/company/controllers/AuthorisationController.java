@@ -15,4 +15,10 @@ public class AuthorisationController implements IAuthorisationController {
 
         return (authorised ? "Logged in succssfully!" : null);
     }
+
+    public int checkRole(String login){
+        int role = repo.checkRole(login);
+
+        return role;
+    }
 }

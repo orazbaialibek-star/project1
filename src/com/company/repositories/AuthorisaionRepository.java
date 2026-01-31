@@ -17,9 +17,38 @@ public class AuthorisaionRepository implements IAuthorisationRepository{
         this.db = db;
     }
 
+    public int role;
+
+    public int getRole() {
+        return role;
+    }
+
+    public int checkRole(String login){
+        Connection con = null;
+
+        try {
+
+            con = db.getConnection();
+            String sql3 = "SELECT role FROM users WHERE login=?";
+            PreparedStatement st3 = con.prepareStatement(sql3);
+
+            st3.setString(1,login);
+
+            ResultSet rs3 = st3.executeQuery();
+
+            if(rs3.next()){
+                role = rs3.getInt("role");
+                return role;
+            }
+        } catch (SQLException e) {
+            System.out.println("sql error: " + e.getMessage());
+            return 0;
+        }
+        return role;
+    }
+
     public boolean checkLogPas_Admin(String login, String password){
         Connection con = null;
-        int role = 0;
 
         try {
 
@@ -33,6 +62,11 @@ public class AuthorisaionRepository implements IAuthorisationRepository{
             st3.setString(1,login);
 
             ResultSet rs1 = st1.executeQuery();
+            ResultSet rs3 = st3.executeQuery();
+
+            if(rs3.next()){
+                role = rs3.getInt("role");
+            }
 
             String sql2 = "SELECT password FROM users WHERE password=?";
             PreparedStatement st2 = con.prepareStatement(sql2);

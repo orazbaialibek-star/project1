@@ -79,4 +79,110 @@ public class DepositRepository implements IDepositRepository {
         }
         return false;
     }
+
+    public boolean replenishDeposit(int id, int userid, int amount){
+        Connection con = null;
+
+        try {
+            con = db.getConnection();
+
+            String sql1 = "SELECT id,userid,percentage,balance FROM deposits WHERE id=? AND userid=?";
+            PreparedStatement st1 = con.prepareStatement(sql1);
+
+            st1.setInt(1, id);
+            st1.setInt(2, userid);
+
+            st1.execute();
+
+            String sql2 = "BEGIN; UPDATE users SET balance = balance - ? WHERE id = ?; UPDATE deposits SET balance = balance + ? WHERE id = ?; COMMIT;";
+            PreparedStatement st2 = con.prepareStatement(sql2);
+
+            st2.setInt(1,amount);
+            st2.setInt(2,userid);
+            st2.setInt(3,amount);
+            st2.setInt(4,id);
+
+            st2.execute();
+
+            return true;
+        } catch(SQLException e) {
+            System.out.println("sql error: " + e.getMessage());
+        }
+        return false;
+    }
+
+    public boolean withdrawDeposit(int id, int userid, int amount){
+        Connection con = null;
+
+        try {
+            con = db.getConnection();
+
+            String sql1 = "SELECT id,userid,percentage,balance FROM deposits WHERE id=? AND userid=?";
+            PreparedStatement st1 = con.prepareStatement(sql1);
+
+            st1.setInt(1, id);
+            st1.setInt(2, userid);
+
+            st1.execute();
+
+            String sql2 = "BEGIN; UPDATE users SET balance = balance + ? WHERE id = ?; UPDATE deposits SET balance = balance - ? WHERE id = ?; COMMIT;";
+            PreparedStatement st2 = con.prepareStatement(sql2);
+
+            st2.setInt(1,amount);
+            st2.setInt(2,userid);
+            st2.setInt(3,amount);
+            st2.setInt(4,id);
+
+            st2.execute();
+
+            return true;
+        } catch(SQLException e) {
+            System.out.println("sql error: " + e.getMessage());
+        }
+        return false;
+    }
+
+    public int checkBalanceUser(int userid){
+        Connection con = null;
+
+        try {
+            con = db.getConnection();
+            String sql = "SELECT balance FROM users WHERE id=?";
+            PreparedStatement st = con.prepareStatement(sql);
+
+            st.setInt(1,userid);
+
+            ResultSet rs = st.executeQuery();
+
+            if(rs.next()){
+                return rs.getInt("balance");
+            }
+        } catch (SQLException e) {
+            System.out.println("sql error: " + e.getMessage());
+        }
+
+        return 0;
+    }
+
+    public int checkBalanceDeposit(int id){
+        Connection con = null;
+
+        try {
+            con = db.getConnection();
+            String sql = "SELECT balance FROM deposits WHERE id=?";
+            PreparedStatement st = con.prepareStatement(sql);
+
+            st.setInt(1,id);
+
+            ResultSet rs = st.executeQuery();
+
+            if(rs.next()){
+                return rs.getInt("balance");
+            }
+        } catch (SQLException e) {
+            System.out.println("sql error: " + e.getMessage());
+        }
+
+        return 0;
+    }
 }

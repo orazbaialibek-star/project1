@@ -28,8 +28,38 @@ public class DepositController implements IDepositController {
     public String createDeposit(int userid, double percentage, int balance){
         Deposit deposit = new Deposit(userid, percentage, balance);
 
+        int currentBalance = repo.checkBalanceUser(userid);
+
+        if (currentBalance > balance){
+            return "Insufficient funds";
+        }
+
         boolean created = repo.createDeposit(deposit);
 
         return (created ? "Deposit created" : "An error occured");
+    }
+
+    public String replenishDeposit(int id, int userid, int amount){
+        boolean replenished = repo.replenishDeposit(id, userid, amount);
+
+        int currentBalance = repo.checkBalanceUser(userid);
+
+        if (currentBalance > amount){
+            return "Insufficient funds";
+        }
+
+        return (replenished ? "Replenished successfully" : "An error occured");
+    }
+
+    public String withdrawDeposit(int id, int userid, int amount){
+        boolean withdrawn = repo.withdrawDeposit(id, userid, amount);
+
+        int currentBalance = repo.checkBalanceDeposit(id);
+
+        if (currentBalance < amount){
+            return "Insufficient funds in deposit";
+        }
+
+        return (withdrawn ? "Withdrawn successfully" : "An error occured");
     }
 }

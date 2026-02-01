@@ -75,13 +75,33 @@ public class MyApp {
         System.out.println("Welcome, " + currentLogin);
         System.out.println("Select option:");
         System.out.println("1. Get my info");
-        System.out.println("2. Start transaction");
-        System.out.println("3. Get all my transactions");
-        System.out.println("4. Get all my deposits");
-        System.out.println("5. Create a deposit");
+        System.out.println("2. Go to transactions");
+        System.out.println("3. Go to deposits");
         System.out.println("0. Exit");
         System.out.println();
         System.out.print("Enter option (0-5): ");
+    }
+
+    private void depositsMenu() {
+        System.out.println();
+        System.out.println("Select option:");
+        System.out.println("1. Get my deposits");
+        System.out.println("2. Create a new deposit");
+        System.out.println("3. Replenish deposit");
+        System.out.println("4. Withdraw from deposit");
+        System.out.println("0. Go back");
+        System.out.println();
+        System.out.print("Enter option (0-4): ");
+    }
+
+    private void transactionsMenu() {
+        System.out.println();
+        System.out.println("Select option:");
+        System.out.println("1. Get all my transactions");
+        System.out.println("2. Start a new transaction");
+        System.out.println("0. Go back");
+        System.out.println();
+        System.out.print("Enter option (0-2): ");
     }
 
     private void mainMenu(){
@@ -181,6 +201,66 @@ public class MyApp {
         System.out.println(responce);
     }
 
+    public void replenishDepositMenu(){
+        System.out.println("Insert deposit id");
+        int id = sc.nextInt();
+        System.out.println("Insert an amount");
+        int amount = sc.nextInt();
+        String responce = depCont.replenishDeposit(id, currentUserId, amount);
+        System.out.println(responce);
+    }
+
+    public void withdrawDepositMenu(){
+        System.out.println("Insert deposit id");
+        int id = sc.nextInt();
+        System.out.println("Insert an amount");
+        int amount = sc.nextInt();
+        String responce = depCont.withdrawDeposit(id, currentUserId, amount);
+        System.out.println(responce);
+    }
+
+    public void deposits(){
+        while (true) {
+            depositsMenu();
+            try {
+                int option = sc.nextInt();
+
+                switch (option){
+                    case 1: getAllMyDepositsMenu(); break;
+                    case 2: createDepositMenu(); break;
+                    case 3: replenishDepositMenu(); break;
+                    case 4: withdrawDepositMenu(); break;
+                    default: return;
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Input must be integer: " + e);
+                sc.nextLine();
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    public void transactions(){
+        while (true) {
+            transactionsMenu();
+            try {
+                int option = sc.nextInt();
+
+                switch (option){
+                    case 1: getAllTransactions_userMenu(); break;
+                    case 2: startTransactionMenu(); break;
+                    default: return;
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Input must be integer: " + e);
+                sc.nextLine();
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
     public void launch(){
         while (true) {
             mainMenu();
@@ -233,10 +313,8 @@ public class MyApp {
 
                 switch (option){
                     case 1: getMyInfo(); break;
-                    case 2: startTransactionMenu(); break;
-                    case 3: getAllTransactions_userMenu(); break;
-                    case 4: getAllMyDepositsMenu(); break;
-                    case 5: createDepositMenu(); break;
+                    case 2: transactions(); break;
+                    case 3: deposits(); break;
                     default: return;
                 }
             } catch (InputMismatchException e) {

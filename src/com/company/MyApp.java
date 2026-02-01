@@ -1,6 +1,7 @@
 package com.company;
 
 import com.company.controllers.interfaces.IAuthorisationController;
+import com.company.controllers.interfaces.IDepositController;
 import com.company.controllers.interfaces.IUserController;
 import com.company.controllers.interfaces.ITransactionController;
 
@@ -16,13 +17,16 @@ public class MyApp {
 
     private final IAuthorisationController authCont;
 
+    private final IDepositController depCont;
+
     public int currentUserId = 0;
     public String currentLogin = "NONDEFINED";
 
-    public MyApp(IUserController userCont, ITransactionController transCont, IAuthorisationController authCont) {
+    public MyApp(IUserController userCont, ITransactionController transCont, IAuthorisationController authCont, IDepositController depCont) {
         this.userCont = userCont;
         this.transCont = transCont;
         this.authCont = authCont;
+        this.depCont = depCont;
     }
 
     public void authorisation(){
@@ -54,26 +58,30 @@ public class MyApp {
         System.out.println();
         System.out.println("Welcome, " + currentLogin);
         System.out.println("Select option:");
-        System.out.println("1. Get all users");
-        System.out.println("2. Get user by id");
-        System.out.println("3. Start transaction between users");
-        System.out.println("4. Get all transactions");
-        System.out.println("5. Create user");
-        System.out.println("6. Delete user");
+        System.out.println("1. Get my info");
+        System.out.println("2. Get all users");
+        System.out.println("3. Get user by id");
+        System.out.println("4. Start transaction between users");
+        System.out.println("5. Get all transactions");
+        System.out.println("6. Create user");
+        System.out.println("7. Delete user");
         System.out.println("0. Exit");
         System.out.println();
-        System.out.print("Enter option (0-6): ");
+        System.out.print("Enter option (0-7): ");
     }
 
     private void mainMenuUser() {
         System.out.println();
-        System.out.println("Welcome");
+        System.out.println("Welcome, " + currentLogin);
         System.out.println("Select option:");
-        System.out.println("1. Start transaction");
-        System.out.println("2. Get all my transactions");
+        System.out.println("1. Get my info");
+        System.out.println("2. Start transaction");
+        System.out.println("3. Get all my transactions");
+        System.out.println("4. Get all my deposits");
+        System.out.println("5. Create a deposit");
         System.out.println("0. Exit");
         System.out.println();
-        System.out.print("Enter option (0-3): ");
+        System.out.print("Enter option (0-5): ");
     }
 
     private void mainMenu(){
@@ -98,14 +106,20 @@ public class MyApp {
         System.out.println(response);
     }
 
+    public void getMyInfo(){
+        int id = currentUserId;
+        String responce = userCont.getUser(id);
+        System.out.println(responce);
+    }
+
     public void startTransactionMenu(){
         int user1 = currentUserId;
-        System.out.println("Please enter second users id");
+        System.out.println("Please enter users id");
         int user2 = sc.nextInt();
         System.out.println("Please enter the amount");
         int amount = sc.nextInt();
 
-        String response = transCont.userTransaction_admin(user1, user2, amount);
+        String response = transCont.userTransaction(user1, user2, amount);
         System.out.println(response);
     }
 
@@ -115,8 +129,7 @@ public class MyApp {
     }
 
     public void getAllTransactions_userMenu() {
-        int id = currentUserId;
-        String response = transCont.getAllTransactions_user(id);
+        String response = transCont.getAllTransactions_user(currentUserId);
         System.out.println(response);
     }
 
@@ -146,6 +159,28 @@ public class MyApp {
         System.out.println(response);
     }
 
+    public void getAllMyDepositsMenu(){
+        String responce = depCont.getAllMyDeposits(currentUserId);
+        System.out.println(responce);
+    }
+
+    public void createDepositMenu(){
+        System.out.println("Insert a type of deposit(1-2)");
+        int type = sc.nextInt();
+        System.out.println("Insert a balance");
+        int balance = sc.nextInt();
+        String responce = "NONDEFINED";
+        if (type == 1){
+            double percentage = 14.9;
+            responce = depCont.createDeposit(currentUserId, percentage, balance);
+        }
+        if (type == 2){
+            double percentage = 10.9;
+            responce = depCont.createDeposit(currentUserId, percentage, balance);
+        }
+        System.out.println(responce);
+    }
+
     public void launch(){
         while (true) {
             mainMenu();
@@ -172,12 +207,13 @@ public class MyApp {
                 int option = sc.nextInt();
 
                 switch (option){
-                    case 1: getAllUsersMenu(); break;
-                    case 2: getUserMenu(); break;
-                    case 3: startTransactionMenu(); break;
-                    case 4: getAllTransactions_adminMenu(); break;
-                    case 5: createUserMenu(); break;
-                    case 6: deleteUserMenu(); break;
+                    case 1: getMyInfo(); break;
+                    case 2: getAllUsersMenu(); break;
+                    case 3: getUserMenu(); break;
+                    case 4: startTransactionMenu(); break;
+                    case 5: getAllTransactions_adminMenu(); break;
+                    case 6: createUserMenu(); break;
+                    case 7: deleteUserMenu(); break;
                     default: return;
                 }
             } catch (InputMismatchException e) {
@@ -196,8 +232,11 @@ public class MyApp {
                 int option = sc.nextInt();
 
                 switch (option){
-                    case 1: startTransactionMenu(); break;
-                    case 2: getAllTransactions_userMenu(); break;
+                    case 1: getMyInfo(); break;
+                    case 2: startTransactionMenu(); break;
+                    case 3: getAllTransactions_userMenu(); break;
+                    case 4: getAllMyDepositsMenu(); break;
+                    case 5: createDepositMenu(); break;
                     default: return;
                 }
             } catch (InputMismatchException e) {

@@ -4,15 +4,15 @@ public class Deposit {
     private int id;
     private int userid;
     private double percentage;
-    private double balance;
+    private int balance;
 
-    public Deposit(int userid, double percentage, double balance){
+    public Deposit(int userid, double percentage, int balance){
         setUserid(userid);
         setPercentage(percentage);
         setBalance(balance);
     }
 
-    public Deposit(int id, int userid, double percentage, double balance){
+    public Deposit(int id, int userid, double percentage, int balance){
         this(userid, percentage, balance);
         setId(id);
     }
@@ -35,10 +35,20 @@ public class Deposit {
     public void setPercentage(double percentage) {
         this.percentage = percentage;
     }
-    public double getBalance() {
+    public int getBalance() {
         return balance;
     }
-    public void setBalance(double balance) {
+    public void setBalance(int balance) {
         this.balance = balance;
+    }
+
+    @Override
+    public String toString(){
+        return "Deposit{" +
+                "id=" + getId() +
+                ", user=" + getUserid() + '\'' +
+                ", percentage='" + getPercentage() + '\'' +
+                ", balance=" + getBalance() + '\'' +
+                '}';
     }
 }

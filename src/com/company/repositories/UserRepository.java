@@ -77,7 +77,7 @@ public class UserRepository implements IUserRepository {
 
         try {
             con = db.getConnection();
-            String sql = "SELECT id,name,surname,balance FROM users WHERE id=?";
+            String sql = "SELECT id,name,surname,balance,login,password,role FROM users WHERE id=?";
             PreparedStatement st = con.prepareStatement(sql);
 
             st.setInt(1,id);

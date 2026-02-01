@@ -1,7 +1,6 @@
 package com.company.repositories;
 
 import com.company.data.interfaces.IDB;
-import com.company.models.Authorisation;
 import com.company.models.User;
 import com.company.repositories.interfaces.IAuthorisationRepository;
 
@@ -17,20 +16,91 @@ public class AuthorisaionRepository implements IAuthorisationRepository{
         this.db = db;
     }
 
-    public boolean checkLogPas_Admin(String login, String password){
+    public int role;
+
+    public String login;
+
+    public int id;
+
+    public int checkId(String login){
         Connection con = null;
-        int role = 0;
+
+        try {
+
+            con = db.getConnection();
+            String sql1 = "SELECT id FROM users WHERE login=?";
+            PreparedStatement st1 = con.prepareStatement(sql1);
+
+            st1.setString(1,login);
+
+            ResultSet rs1 = st1.executeQuery();
+
+            if(rs1.next()){
+                id = rs1.getInt("id");
+            }
+        } catch (SQLException e) {
+            System.out.println("sql error: " + e.getMessage());
+            return 0;
+        }
+        return id;
+    }
+
+    public int checkRole(String login){
+        Connection con = null;
+
+        try {
+
+            con = db.getConnection();
+            String sql1 = "SELECT role FROM users WHERE login=?";
+            PreparedStatement st1 = con.prepareStatement(sql1);
+
+            st1.setString(1,login);
+
+            ResultSet rs1 = st1.executeQuery();
+
+            if(rs1.next()){
+                role = rs1.getInt("role");
+            }
+        } catch (SQLException e) {
+            System.out.println("sql error: " + e.getMessage());
+            return 0;
+        }
+        return role;
+    }
+
+    public String checkLogin(String login){
+        Connection con = null;
 
         try {
 
             con = db.getConnection();
             String sql1 = "SELECT login FROM users WHERE login=?";
-            String sql3 = "SELECT role FROM users WHERE login=?";
             PreparedStatement st1 = con.prepareStatement(sql1);
-            PreparedStatement st3 = con.prepareStatement(sql3);
 
             st1.setString(1,login);
-            st3.setString(1,login);
+
+            ResultSet rs1 = st1.executeQuery();
+
+            if(rs1.next()){
+                login = rs1.getString("login");
+            }
+        } catch (SQLException e) {
+            System.out.println("sql error: " + e.getMessage());
+            return null;
+        }
+        return login;
+    }
+
+    public boolean checkLogPas(String login, String password){
+        Connection con = null;
+
+        try {
+
+            con = db.getConnection();
+            String sql1 = "SELECT login FROM users WHERE login=?";
+            PreparedStatement st1 = con.prepareStatement(sql1);
+
+            st1.setString(1,login);
 
             ResultSet rs1 = st1.executeQuery();
 

@@ -16,6 +16,9 @@ public class MyApp {
 
     private final IAuthorisationController authCont;
 
+    public int currentUserId = 0;
+    public String currentLogin = "NONDEFINED";
+
     public MyApp(IUserController userCont, ITransactionController transCont, IAuthorisationController authCont) {
         this.userCont = userCont;
         this.transCont = transCont;
@@ -28,19 +31,28 @@ public class MyApp {
         System.out.println("Please enter the password");
         String password = sc.next();
 
-        String responce = authCont.checkLogPas_Admin(login, password);
-        System.out.println(responce);
-        if (responce !=null){
-            launchForAdmin();
-            System.out.println(responce);
-        } if (responce == null){
+        String responce1 = authCont.checkLogPas(login, password);
+        int responce2 = authCont.checkRole(login);
+        int responce3 = authCont.checkId(login);
+        System.out.println(responce1);
+        if (responce1 !=null){
+            currentLogin = login;
+            currentUserId = responce3;
+            if (responce2 == 1){
+                launchForAdmin();
+            }
+            if (responce2 == 2){
+                launchForUser();
+            }
+            System.out.println(responce1 + currentUserId);
+        } if (responce1 == null){
             System.out.println("An error occured");
         }
     }
 
     private void mainMenuAdmin() {
         System.out.println();
-        System.out.println("Welcome to Bank accounts manager");
+        System.out.println("Welcome, " + currentLogin);
         System.out.println("Select option:");
         System.out.println("1. Get all users");
         System.out.println("2. Get user by id");
@@ -57,7 +69,7 @@ public class MyApp {
         System.out.println();
         System.out.println("Welcome");
         System.out.println("Select option:");
-        System.out.println("1. Start transaction between users");
+        System.out.println("1. Start transaction");
         System.out.println("2. Get all my transactions");
         System.out.println("0. Exit");
         System.out.println();
@@ -86,20 +98,25 @@ public class MyApp {
         System.out.println(response);
     }
 
-    public void getTransactionMenu(){
-        System.out.println("Please enter first users id");
-        int user1 = sc.nextInt();
+    public void startTransactionMenu(){
+        int user1 = currentUserId;
         System.out.println("Please enter second users id");
         int user2 = sc.nextInt();
         System.out.println("Please enter the amount");
         int amount = sc.nextInt();
 
-        String response = transCont.userTransaction(user1, user2, amount);
+        String response = transCont.userTransaction_admin(user1, user2, amount);
         System.out.println(response);
     }
 
-    public void getAllTransactionsMenu() {
-        String response = transCont.getAllTransactions();
+    public void getAllTransactions_adminMenu() {
+        String response = transCont.getAllTransactions_admin();
+        System.out.println(response);
+    }
+
+    public void getAllTransactions_userMenu() {
+        int id = currentUserId;
+        String response = transCont.getAllTransactions_user(id);
         System.out.println(response);
     }
 
@@ -122,8 +139,10 @@ public class MyApp {
         String login = sc.next();
         System.out.println("Please enter the password");
         String password = sc.next();
+        System.out.println("Please enter the role(1 is for admin and 2 is for user");
+        int role = sc.nextInt();
 
-        String response = userCont.createUser(name, surname, balance, login, password);
+        String response = userCont.createUser(name, surname, balance, login, password, role);
         System.out.println(response);
     }
 
@@ -155,8 +174,8 @@ public class MyApp {
                 switch (option){
                     case 1: getAllUsersMenu(); break;
                     case 2: getUserMenu(); break;
-                    case 3: getTransactionMenu(); break;
-                    case 4: getAllTransactionsMenu(); break;
+                    case 3: startTransactionMenu(); break;
+                    case 4: getAllTransactions_adminMenu(); break;
                     case 5: createUserMenu(); break;
                     case 6: deleteUserMenu(); break;
                     default: return;
@@ -177,8 +196,8 @@ public class MyApp {
                 int option = sc.nextInt();
 
                 switch (option){
-                    case 1: getTransactionMenu(); break;
-                    case 2: getAllTransactionsMenu(); break;
+                    case 1: startTransactionMenu(); break;
+                    case 2: getAllTransactions_userMenu(); break;
                     default: return;
                 }
             } catch (InputMismatchException e) {

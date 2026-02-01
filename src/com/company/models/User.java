@@ -63,7 +63,7 @@ public class User {
     public void setLogin(String login){
         this.login = login;
     }
-    public String getPasword(){
+    public String getPassword(){
         return password;
     }
     public void setPassword(String password){

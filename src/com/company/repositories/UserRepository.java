@@ -58,7 +58,7 @@ public class UserRepository implements IUserRepository {
             st.setString(2, user.getSurname());
             st.setDouble(3, user.getBalance());
             st.setString(4, user.getLogin());
-            st.setString(5, user.getPasword());
+            st.setString(5, user.getPassword());
             st.setInt(6,user.getRole());
 
             st.execute();

@@ -15,7 +15,7 @@ public class TransactionRepository implements ITransactionRepository {
         this.db = db;
     }
 
-    public boolean userTransaction_admin(Transaction trans){
+    public boolean userTransaction(Transaction trans){
         Connection con = null;
 
         try {
@@ -55,7 +55,7 @@ public class TransactionRepository implements ITransactionRepository {
         return false;
     }
 
-    public List<Transaction> getAllTransactions(){
+    public List<Transaction> getAllTransactions_admin(){
         Connection con = null;
 
         try {
@@ -64,6 +64,36 @@ public class TransactionRepository implements ITransactionRepository {
             Statement st = con.createStatement();
 
             ResultSet rs = st.executeQuery(sql);
+            List<Transaction> transes = new ArrayList<>();
+            while (rs.next()) {
+                Transaction trans = new Transaction(rs.getInt("id"),
+                        rs.getInt("userfromid"),
+                        rs.getInt("usertoid"),
+                        rs.getInt("amount"));
+                transes.add(trans);
+            }
+
+            return transes;
+        } catch (SQLException e) {
+            System.out.println("sql error: " + e.getMessage());
+        }
+
+        return null;
+    }
+
+    public List<Transaction> getAllTransactions_user(int id){
+        Connection con = null;
+
+        try {
+            con = db.getConnection();
+            String sql = "SELECT id,userfromid,usertoid,amount FROM transactions WHERE userfromid=? OR usertoid = ?";
+            PreparedStatement st = con.prepareStatement(sql);
+
+            st.setInt(1,id);
+            st.setInt(2,id);
+
+            ResultSet rs = st.executeQuery();
+
             List<Transaction> transes = new ArrayList<>();
             while (rs.next()) {
                 Transaction trans = new Transaction(rs.getInt("id"),

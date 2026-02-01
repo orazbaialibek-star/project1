@@ -5,6 +5,7 @@ import com.company.models.Transaction;
 import java.util.List;
 
 public interface ITransactionRepository {
-    boolean userTransaction_admin(Transaction trans);
-    List<Transaction> getAllTransactions();
+    boolean userTransaction(Transaction trans);
+    List<Transaction> getAllTransactions_admin();
+    List<Transaction> getAllTransactions_user(int id);
 }

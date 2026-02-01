@@ -9,9 +9,12 @@ import java.util.List;
 
 public class TransactionController implements ITransactionController {
     private final ITransactionRepository repo;
+    public TransactionController(ITransactionRepository repo) { // Dependency Injection
+        this.repo = repo;
+    }
 
-    public String getAllTransactions() {
-        List<Transaction> transes = repo.getAllTransactions();
+    public String getAllTransactions_admin() {
+        List<Transaction> transes = repo.getAllTransactions_admin();
 
         StringBuilder response = new StringBuilder();
         for (Transaction trans : transes) {
@@ -21,14 +24,21 @@ public class TransactionController implements ITransactionController {
         return response.toString();
     }
 
-    public TransactionController(ITransactionRepository repo) { // Dependency Injection
-        this.repo = repo;
+    public String getAllTransactions_user(int id) {
+        List<Transaction> transes = repo.getAllTransactions_user(id);
+
+        StringBuilder response = new StringBuilder();
+        for (Transaction trans : transes) {
+            response.append(trans.toString()).append("\n");
+        }
+
+        return response.toString();
     }
 
     public String userTransaction_admin(int user1, int user2, int amount){
         Transaction trans = new Transaction(user1, user2, amount);
 
-        boolean created = repo.userTransaction_admin(trans);
+        boolean created = repo.userTransaction(trans);
 
         return (created ? "Transaction occured successfully" : "Transaction failed");
     }

@@ -1,7 +1,9 @@
 package com.company.controllers;
 
 import com.company.controllers.interfaces.IUserController;
+import com.company.models.Deposit;
 import com.company.models.User;
+import com.company.repositories.UserRepository;
 import com.company.repositories.interfaces.IUserRepository;
 
 import java.util.List;
@@ -13,8 +15,8 @@ public class UserController implements IUserController {
         this.repo = repo;
     }
 
-    public String createUser(String name, String surname, double balance, String login, String password) {
-        User user = new User(name, surname, balance, login, password);
+    public String createUser(String name, String surname, double balance, String login, String password, int role) {
+        User user = new User.UserBuilder(name, surname).WithBalance(balance).WithLogin(login).WithPassword(password).WithRole(role).build();
 
         boolean created = repo.createUser(user);
 

@@ -15,7 +15,6 @@ public class TransactionRepository implements ITransactionRepository {
         this.db = db;
     }
 
-    @Override
     public boolean userTransaction(Transaction trans){
         Connection con = null;
 
@@ -53,11 +52,10 @@ public class TransactionRepository implements ITransactionRepository {
         } catch(SQLException e) {
             System.out.println("sql error: " + e.getMessage());
         }
-
         return false;
     }
 
-    public List<Transaction> getAllTransactions(){
+    public List<Transaction> getAllTransactions_admin(){
         Connection con = null;
 
         try {
@@ -81,5 +79,56 @@ public class TransactionRepository implements ITransactionRepository {
         }
 
         return null;
+    }
+
+    public List<Transaction> getAllTransactions_user(int id){
+        Connection con = null;
+
+        try {
+            con = db.getConnection();
+            String sql = "SELECT id,userfromid,usertoid,amount FROM transactions WHERE userfromid=? OR usertoid = ?";
+            PreparedStatement st = con.prepareStatement(sql);
+
+            st.setInt(1,id);
+            st.setInt(2,id);
+
+            ResultSet rs = st.executeQuery();
+
+            List<Transaction> transes = new ArrayList<>();
+            while (rs.next()) {
+                Transaction trans = new Transaction(rs.getInt("id"),
+                        rs.getInt("userfromid"),
+                        rs.getInt("usertoid"),
+                        rs.getInt("amount"));
+                transes.add(trans);
+            }
+
+            return transes;
+        } catch (SQLException e) {
+            System.out.println("sql error: " + e.getMessage());
+        }
+
+        return null;
+    }
+    public int checkBalance(int id){
+        Connection con = null;
+
+        try {
+            con = db.getConnection();
+            String sql = "SELECT balance FROM users WHERE id=?";
+            PreparedStatement st = con.prepareStatement(sql);
+
+            st.setInt(1,id);
+
+            ResultSet rs = st.executeQuery();
+
+            if(rs.next()){
+                return rs.getInt("balance");
+            }
+        } catch (SQLException e) {
+            System.out.println("sql error: " + e.getMessage());
+        }
+
+        return 0;
     }
 }

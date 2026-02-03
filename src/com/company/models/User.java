@@ -7,21 +7,56 @@ public class User {
     private double balance;
     private String login;
     private String password;
+    private int role;
 
-    public User(String name, String surname, double balance, String login, String password) {
-        setName(name);
-        setSurname(surname);
-        setBank(balance);
-        setLogin(login);
-        setPassword(password);
+    private User(UserBuilder builder){
+        id = builder.id;
+        name = builder.name;
+        surname = builder.surname;
+        balance = builder.balance;
+        login = builder.login;
+        password = builder.password;
+        role = builder.role;
     }
 
-    public User(int id, String name, String surname, double balance, String login, String password) {
-        this(name, surname, balance, login, password);
-        setId(id);
-    }
+    public static class UserBuilder{
+        private int id;
+        private String name;
+        private String surname;
+        private double balance;
+        private String login;
+        private String password;
+        private int role;
 
-    public User(int id, String name, String surname, double balance) {
+        public UserBuilder(String name, String surname) {
+            this.name=name;
+            this.surname=surname;
+        }
+
+        public UserBuilder(int id, String name, String surname){
+            this(name, surname);
+            this.id=id;
+        }
+
+        public UserBuilder WithRole(int role){
+            this.role=role;
+            return this;
+        }
+        public UserBuilder WithBalance(double balance){
+            this.balance=balance;
+            return this;
+        }
+        public UserBuilder WithLogin(String login){
+            this.login=login;
+            return this;
+        }
+        public UserBuilder WithPassword(String password){
+            this.password=password;
+            return this;
+        }
+        public User build(){
+            return new User(this);
+        }
     }
 
     public int getId() {
@@ -45,16 +80,23 @@ public class User {
     public double getBalance() {
         return balance;
     }
-    public void setBank(double balance) {
+    public void setBalance(double balance) {
         this.balance = balance;
     }
+    public int getRole(){
+        return role;
+    }
+    public void setRole(int role){
+        this.role = role;
+    }
+
     public String getLogin(){
         return login;
     }
     public void setLogin(String login){
         this.login = login;
     }
-    public String getPasword(){
+    public String getPassword(){
         return password;
     }
     public void setPassword(String password){
@@ -67,7 +109,10 @@ public class User {
                 "id=" + getId() +
                 ", name='" + getName() + '\'' +
                 ", surname='" + getSurname() + '\'' +
-                ", balance=" + getBalance() +
+                ", balance=" + getBalance() + '\'' +
+                ", login=" + getLogin() + '\'' +
+                ", password=" + getPassword() + '\'' +
+                ", role=" + getRole() + '\'' +
                 '}';
     }
 }

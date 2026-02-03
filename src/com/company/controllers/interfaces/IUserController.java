@@ -1,5 +1,7 @@
 package com.company.controllers.interfaces;
 
+import com.company.models.User;
+
 public interface IUserController {
     String getAllUsers();
     String getUser(int id);

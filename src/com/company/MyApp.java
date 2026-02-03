@@ -1,6 +1,7 @@
 package com.company;
 
 import com.company.controllers.interfaces.IAuthorisationController;
+import com.company.controllers.interfaces.IDepositController;
 import com.company.controllers.interfaces.IUserController;
 import com.company.controllers.interfaces.ITransactionController;
 
@@ -16,10 +17,16 @@ public class MyApp {
 
     private final IAuthorisationController authCont;
 
-    public MyApp(IUserController userCont, ITransactionController transCont, IAuthorisationController authCont) {
+    private final IDepositController depCont;
+
+    public int currentUserId = 0;
+    public String currentLogin = "NONDEFINED";
+
+    public MyApp(IUserController userCont, ITransactionController transCont, IAuthorisationController authCont, IDepositController depCont) {
         this.userCont = userCont;
         this.transCont = transCont;
         this.authCont = authCont;
+        this.depCont = depCont;
     }
 
     public void authorisation(){
@@ -28,40 +35,73 @@ public class MyApp {
         System.out.println("Please enter the password");
         String password = sc.next();
 
-        String responce = authCont.checkLogPas_Admin(login, password);
-        System.out.println(responce);
-        if (responce !=null){
-            launchForAdmin();
-            System.out.println(responce);
-        } if (responce == null){
+        String responce1 = authCont.checkLogPas(login, password);
+        int responce2 = authCont.checkRole(login);
+        int responce3 = authCont.checkId(login);
+        System.out.println(responce1);
+        if (responce1 !=null){
+            currentLogin = login;
+            currentUserId = responce3;
+            if (responce2 == 1){
+                launchForAdmin();
+            }
+            if (responce2 == 2){
+                launchForUser();
+            }
+            System.out.println(responce1 + currentUserId);
+        } if (responce1 == null){
             System.out.println("An error occured");
         }
     }
 
     private void mainMenuAdmin() {
         System.out.println();
-        System.out.println("Welcome to Bank accounts manager");
+        System.out.println("Welcome, " + currentLogin);
         System.out.println("Select option:");
-        System.out.println("1. Get all users");
-        System.out.println("2. Get user by id");
-        System.out.println("3. Start transaction between users");
-        System.out.println("4. Get all transactions");
-        System.out.println("5. Create user");
-        System.out.println("6. Delete user");
+        System.out.println("1. Get my info");
+        System.out.println("2. Get all users");
+        System.out.println("3. Get user by id");
+        System.out.println("4. Start transaction between users");
+        System.out.println("5. Get all transactions");
+        System.out.println("6. Create user");
+        System.out.println("7. Delete user");
         System.out.println("0. Exit");
         System.out.println();
-        System.out.print("Enter option (0-6): ");
+        System.out.print("Enter option (0-7): ");
     }
 
     private void mainMenuUser() {
         System.out.println();
-        System.out.println("Welcome");
+        System.out.println("Welcome, " + currentLogin);
         System.out.println("Select option:");
-        System.out.println("1. Start transaction between users");
-        System.out.println("2. Get all my transactions");
+        System.out.println("1. Get my info");
+        System.out.println("2. Go to transactions");
+        System.out.println("3. Go to deposits");
         System.out.println("0. Exit");
         System.out.println();
-        System.out.print("Enter option (0-3): ");
+        System.out.print("Enter option (0-5): ");
+    }
+
+    private void depositsMenu() {
+        System.out.println();
+        System.out.println("Select option:");
+        System.out.println("1. Get my deposits");
+        System.out.println("2. Create a new deposit");
+        System.out.println("3. Replenish deposit");
+        System.out.println("4. Withdraw from deposit");
+        System.out.println("0. Go back");
+        System.out.println();
+        System.out.print("Enter option (0-4): ");
+    }
+
+    private void transactionsMenu() {
+        System.out.println();
+        System.out.println("Select option:");
+        System.out.println("1. Get all my transactions");
+        System.out.println("2. Start a new transaction");
+        System.out.println("0. Go back");
+        System.out.println();
+        System.out.print("Enter option (0-2): ");
     }
 
     private void mainMenu(){
@@ -91,10 +131,15 @@ public class MyApp {
         System.out.println(response);
     }
 
-    public void getTransactionMenu(){
-        System.out.println("Please enter first users id");
-        int user1 = sc.nextInt();
-        System.out.println("Please enter second users id");
+    public void getMyInfo(){
+        int id = currentUserId;
+        String responce = userCont.getUser(id);
+        System.out.println(responce);
+    }
+
+    public void startTransactionMenu(){
+        int user1 = currentUserId;
+        System.out.println("Please enter users id");
         int user2 = sc.nextInt();
         System.out.println("Please enter the amount");
         int amount = sc.nextInt();
@@ -103,8 +148,13 @@ public class MyApp {
         System.out.println(response);
     }
 
-    public void getAllTransactionsMenu() {
-        String response = transCont.getAllTransactions();
+    public void getAllTransactions_adminMenu() {
+        String response = transCont.getAllTransactions_admin();
+        System.out.println(response);
+    }
+
+    public void getAllTransactions_userMenu() {
+        String response = transCont.getAllTransactions_user(currentUserId);
         System.out.println(response);
     }
 
@@ -127,9 +177,93 @@ public class MyApp {
         String login = sc.next();
         System.out.println("Please enter the password");
         String password = sc.next();
+        System.out.println("Please enter the role(1 is for admin and 2 is for user");
+        int role = sc.nextInt();
 
-        String response = userCont.createUser(name, surname, balance, login, password);
+        String response = userCont.createUser(name, surname, balance, login, password, role);
         System.out.println(response);
+    }
+
+    public void getAllMyDepositsMenu(){
+        String responce = depCont.getAllMyDeposits(currentUserId);
+        System.out.println(responce);
+    }
+
+    public void createDepositMenu(){
+        System.out.println("Insert a type of deposit(1-2)");
+        int type = sc.nextInt();
+        System.out.println("Insert a balance");
+        int balance = sc.nextInt();
+        String responce = "NONDEFINED";
+        if (type == 1){
+            double percentage = 14.9;
+            responce = depCont.createDeposit(currentUserId, percentage, balance);
+        }
+        if (type == 2){
+            double percentage = 10.9;
+            responce = depCont.createDeposit(currentUserId, percentage, balance);
+        }
+        System.out.println(responce);
+    }
+
+    public void replenishDepositMenu(){
+        System.out.println("Insert deposit id");
+        int id = sc.nextInt();
+        System.out.println("Insert an amount");
+        int amount = sc.nextInt();
+        String responce = depCont.replenishDeposit(id, currentUserId, amount);
+        System.out.println(responce);
+    }
+
+    public void withdrawDepositMenu(){
+        System.out.println("Insert deposit id");
+        int id = sc.nextInt();
+        System.out.println("Insert an amount");
+        int amount = sc.nextInt();
+        String responce = depCont.withdrawDeposit(id, currentUserId, amount);
+        System.out.println(responce);
+    }
+
+    public void deposits(){
+        while (true) {
+            depositsMenu();
+            try {
+                int option = sc.nextInt();
+
+                switch (option){
+                    case 1: getAllMyDepositsMenu(); break;
+                    case 2: createDepositMenu(); break;
+                    case 3: replenishDepositMenu(); break;
+                    case 4: withdrawDepositMenu(); break;
+                    default: return;
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Input must be integer: " + e);
+                sc.nextLine();
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    public void transactions(){
+        while (true) {
+            transactionsMenu();
+            try {
+                int option = sc.nextInt();
+
+                switch (option){
+                    case 1: getAllTransactions_userMenu(); break;
+                    case 2: startTransactionMenu(); break;
+                    default: return;
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Input must be integer: " + e);
+                sc.nextLine();
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
     }
 
     public void launch(){
@@ -183,8 +317,9 @@ public class MyApp {
                 int option = sc.nextInt();
 
                 switch (option){
-                    case 1: getTransactionMenu(); break;
-                    case 2: getAllTransactionsMenu(); break;
+                    case 1: getMyInfo(); break;
+                    case 2: transactions(); break;
+                    case 3: deposits(); break;
                     default: return;
                 }
             } catch (InputMismatchException e) {

@@ -1,8 +1,7 @@
 package com.company.controllers.interfaces;
 
-import com.company.models.User;
-
 public interface ITransactionController {
-    String getAllTransactions();
+    String getAllTransactions_admin();
+    String getAllTransactions_user(int id);
     String userTransaction(int user1, int user2, int amount);
 }

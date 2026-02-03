@@ -5,4 +5,5 @@ public interface IUserController {
     String getUser(int id);
     String deleteUser(int id);
     String createUser(String name, String surname, double balance, String login, String password);
+    String getUsersWithTransactions();
 }

@@ -40,4 +40,13 @@ public class UserController implements IUserController {
 
         return (deleted ? "User was deleted successfully!" : "User deletion failed!");
     }
+
+    public String getUsersWithTransactions(){
+        List<String> userswithtrans = repo.getUsersWithTransactions();
+
+        StringBuilder response = new StringBuilder();
+        userswithtrans.forEach(user -> response.append(user).append("\n"));
+
+        return response.toString();
+    }
 }

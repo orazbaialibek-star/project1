@@ -35,8 +35,21 @@ public class TransactionController implements ITransactionController {
         return response.toString();
     }
 
-    public String userTransaction_admin(int user1, int user2, int amount){
+    public String userTransaction(int user1, int user2, int amount){
         Transaction trans = new Transaction(user1, user2, amount);
+
+        if (user1 == user2){
+            return "Cannot transfer money to yourself";
+        }
+        if (amount <= 0){
+            return "Amount cannot be less or equal to 0";
+        }
+
+        int balance = repo.checkBalance(user1);
+
+        if (amount > balance){
+            return "Insufficient funds";
+        }
 
         boolean created = repo.userTransaction(trans);
 

@@ -8,4 +8,5 @@ public interface ITransactionRepository {
     boolean userTransaction(Transaction trans);
     List<Transaction> getAllTransactions_admin();
     List<Transaction> getAllTransactions_user(int id);
+    int checkBalance(int id);
 }

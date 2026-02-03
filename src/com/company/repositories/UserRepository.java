@@ -27,13 +27,11 @@ public class UserRepository implements IUserRepository {
             ResultSet rs = st.executeQuery(sql);
             List<User> users = new ArrayList<>();
             while (rs.next()) {
-                User user = new User(rs.getInt("id"),
-                        rs.getString("name"),
-                        rs.getString("surname"),
-                        rs.getDouble("balance"),
-                        rs.getString("login"),
-                        rs.getString("password"),
-                        rs.getInt("role"));
+                User user = new User.
+                        UserBuilder(rs.getInt("id"), rs.getString("name"), rs.getString("surname"))
+                        .WithBalance(rs.getInt("balance"))
+                        .WithLogin(rs.getString("login"))
+                        .build();
                 users.add(user);
             }
 
@@ -77,7 +75,7 @@ public class UserRepository implements IUserRepository {
 
         try {
             con = db.getConnection();
-            String sql = "SELECT id,name,surname,balance FROM users WHERE id=?";
+            String sql = "SELECT id,name,surname,balance,login,password,role FROM users WHERE id=?";
             PreparedStatement st = con.prepareStatement(sql);
 
             st.setInt(1,id);
@@ -85,13 +83,11 @@ public class UserRepository implements IUserRepository {
             ResultSet rs = st.executeQuery();
 
             if (rs.next()){
-                return new User(rs.getInt("id"),
-                        rs.getString("name"),
-                        rs.getString("surname"),
-                        rs.getDouble("balance"),
-                        rs.getString("login"),
-                        rs.getString("password"),
-                        rs.getInt("role"));
+                return new User.
+                        UserBuilder(rs.getInt("id"), rs.getString("name"), rs.getString("surname"))
+                        .WithBalance(rs.getInt("balance"))
+                        .WithLogin(rs.getString("login"))
+                        .build();
             }
         } catch (SQLException e) {
             System.out.println("sql error: " + e.getMessage());

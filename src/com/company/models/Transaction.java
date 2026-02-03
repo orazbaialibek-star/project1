@@ -5,6 +5,7 @@ public class Transaction {
     private int userFrom;
     private int userTo;
     private int amount;
+    private int depositTo;
 
     public Transaction(int userFrom, int userTo, int amount){
         setUserFrom(userFrom);
@@ -40,6 +41,12 @@ public class Transaction {
     }
     public void setAmount(int amount) {
         this.amount = amount;
+    }
+    public int getDepositTo() {
+        return depositTo;
+    }
+    public void setDepositTo(int depositTo) {
+        this.depositTo = depositTo;
     }
 
     @Override

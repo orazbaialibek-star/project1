@@ -1,13 +1,4 @@
-package com.company.models;
-
 public class User {
-    private int id;
-    private String name;
-    private String surname;
-    private double balance;
-    private String login;
-    private String password;
-    private int role;
 
     private User(UserBuilder builder){
         id = builder.id;
@@ -59,49 +50,30 @@ public class User {
         }
     }
 
-    public int getId() {
-        return id;
-    }
-    public void setId(int id) {
-        this.id = id;
-    }
-    public String getName() {
-        return name;
-    }
-    public void setName(String name) {
-        this.name = name;
-    }
-    public String getSurname() {
-        return surname;
-    }
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-    public double getBalance() {
-        return balance;
-    }
-    public void setBalance(double balance) {
-        this.balance = balance;
-    }
-    public int getRole(){
-        return role;
-    }
-    public void setRole(int role){
-        this.role = role;
-    }
+        public Builder id(Long id) {
+            this.id = id;
+            return this;
+        }
 
-    public String getLogin(){
-        return login;
-    }
-    public void setLogin(String login){
-        this.login = login;
-    }
-    public String getPassword(){
-        return password;
-    }
-    public void setPassword(String password){
-        this.password = password;
-    }
+        public Builder username(String username) {
+            this.username = username;
+            return this;
+        }
+
+        public Builder email(String email) {
+            this.email = email;
+            return this;
+        }
+
+        public Builder role(String role) {
+            this.role = role;
+            return this;
+        }
+
+        public Builder active(boolean active) {
+            this.active = active;
+            return this;
+        }
 
     @Override
     public String toString(){

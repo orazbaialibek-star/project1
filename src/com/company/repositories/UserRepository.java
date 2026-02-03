@@ -122,9 +122,9 @@ public class UserRepository implements IUserRepository {
                 con = db.getConnection();
 
                 String sql =
-                        "SELECT u.name, u.surname, t.amount " +
+                        "SELECT u.name, u.surname, t.amount "+
                                 "FROM users u " +
-                                "JOIN transactions t ON u.id = t.sender_id";
+                                "JOIN transactions t ON u.id = t.userfromid";
 
                 Statement st = con.createStatement();
                 ResultSet rs = st.executeQuery(sql);

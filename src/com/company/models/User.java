@@ -9,21 +9,54 @@ public class User {
     private String password;
     private int role;
 
-    public User(String name, String surname, double balance, String login, String password, int role) {
-        setName(name);
-        setSurname(surname);
-        setBalance(balance);
-        setLogin(login);
-        setPassword(password);
-        setRole(role);
+    private User(UserBuilder builder){
+        id = builder.id;
+        name = builder.name;
+        surname = builder.surname;
+        balance = builder.balance;
+        login = builder.login;
+        password = builder.password;
+        role = builder.role;
     }
 
-    public User(int id, String name, String surname, double balance, String login, String password, int role) {
-        this(name, surname, balance, login, password, role);
-        setId(id);
-    }
+    public static class UserBuilder{
+        private int id;
+        private String name;
+        private String surname;
+        private double balance;
+        private String login;
+        private String password;
+        private int role;
 
-    public User(int id, String name, String surname, double balance, String login, int role) {
+        public UserBuilder(String name, String surname) {
+            this.name=name;
+            this.surname=surname;
+        }
+
+        public UserBuilder(int id, String name, String surname){
+            this(name, surname);
+            this.id=id;
+        }
+
+        public UserBuilder WithRole(int role){
+            this.role=role;
+            return this;
+        }
+        public UserBuilder WithBalance(double balance){
+            this.balance=balance;
+            return this;
+        }
+        public UserBuilder WithLogin(String login){
+            this.login=login;
+            return this;
+        }
+        public UserBuilder WithPassword(String password){
+            this.password=password;
+            return this;
+        }
+        public User build(){
+            return new User(this);
+        }
     }
 
     public int getId() {
@@ -78,6 +111,7 @@ public class User {
                 ", surname='" + getSurname() + '\'' +
                 ", balance=" + getBalance() + '\'' +
                 ", login=" + getLogin() + '\'' +
+                ", password=" + getPassword() + '\'' +
                 ", role=" + getRole() + '\'' +
                 '}';
     }

@@ -40,25 +40,26 @@ public class DepositController implements IDepositController {
     }
 
     public String replenishDeposit(int id, int userid, int amount){
-        boolean replenished = repo.replenishDeposit(id, userid, amount);
+        int currentBalanceU = repo.checkBalanceUser(userid);
 
-        int currentBalance = repo.checkBalanceUser(userid);
-
-        if (currentBalance > amount){
+        if (currentBalanceU < amount){
             return "Insufficient funds";
         }
+
+        boolean replenished = repo.replenishDeposit(id, userid, amount);
 
         return (replenished ? "Replenished successfully" : "An error occured");
     }
 
     public String withdrawDeposit(int id, int userid, int amount){
-        boolean withdrawn = repo.withdrawDeposit(id, userid, amount);
 
-        int currentBalance = repo.checkBalanceDeposit(id);
+        int currentBalanceD = repo.checkBalanceDeposit(id);
 
-        if (currentBalance < amount){
+        if (currentBalanceD > amount){
             return "Insufficient funds in deposit";
         }
+
+        boolean withdrawn = repo.withdrawDeposit(id, userid, amount);
 
         return (withdrawn ? "Withdrawn successfully" : "An error occured");
     }

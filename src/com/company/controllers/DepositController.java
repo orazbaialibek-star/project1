@@ -25,6 +25,17 @@ public class DepositController implements IDepositController {
         return response.toString();
     }
 
+    public String getAllDeposits(){
+        List<Deposit> deps = repo.getAllDeposits();
+
+        StringBuilder response = new StringBuilder();
+        for (Deposit dep : deps) {
+            response.append(dep.toString()).append("\n");
+        }
+
+        return response.toString();
+    }
+
     public String createDeposit(int userid, double percentage, int balance){
         Deposit deposit = new Deposit(userid, percentage, balance);
 

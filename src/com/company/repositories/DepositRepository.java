@@ -5,10 +5,7 @@ import com.company.models.Deposit;
 import com.company.models.Transaction;
 import com.company.repositories.interfaces.IDepositRepository;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +27,33 @@ public class DepositRepository implements IDepositRepository {
             st.setInt(1,id);
 
             ResultSet rs = st.executeQuery();
+
+            List<Deposit> deps = new ArrayList<>();
+            while (rs.next()) {
+                Deposit dep = new Deposit(rs.getInt("id"),
+                        rs.getInt("userid"),
+                        rs.getDouble("percentage"),
+                        rs.getInt("balance"));
+                deps.add(dep);
+            }
+
+            return deps;
+        } catch (SQLException e) {
+            System.out.println("sql error: " + e.getMessage());
+        }
+
+        return null;
+    }
+
+    public List<Deposit> getAllDeposits(){
+        Connection con = null;
+
+        try {
+            con = db.getConnection();
+            String sql = "SELECT id,userid,percentage,balance FROM deposits WHERE userid = ?";
+            Statement st = con.createStatement();
+
+            ResultSet rs = st.executeQuery(sql);
 
             List<Deposit> deps = new ArrayList<>();
             while (rs.next()) {

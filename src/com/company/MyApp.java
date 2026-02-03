@@ -21,6 +21,7 @@ public class MyApp {
 
     public int currentUserId = 0;
     public String currentLogin = "NONDEFINED";
+    public int currentUserRole = 0;
 
     public MyApp(IUserController userCont, ITransactionController transCont, IAuthorisationController authCont, IDepositController depCont) {
         this.userCont = userCont;
@@ -43,9 +44,11 @@ public class MyApp {
             currentLogin = login;
             currentUserId = responce3;
             if (responce2 == 1){
+                currentUserRole = 1;
                 launchForAdmin();
             }
             if (responce2 == 2){
+                currentUserRole = 2;
                 launchForUser();
             }
             System.out.println(responce1 + currentUserId);
@@ -59,15 +62,12 @@ public class MyApp {
         System.out.println("Welcome, " + currentLogin);
         System.out.println("Select option:");
         System.out.println("1. Get my info");
-        System.out.println("2. Get all users");
-        System.out.println("3. Get user by id");
-        System.out.println("4. Start transaction between users");
-        System.out.println("5. Get all transactions");
-        System.out.println("6. Create user");
-        System.out.println("7. Delete user");
+        System.out.println("2. Go to transactions");
+        System.out.println("3. Go to deposits");
+        System.out.println("4. Open admin panel");
         System.out.println("0. Exit");
         System.out.println();
-        System.out.print("Enter option (0-7): ");
+        System.out.print("Enter option (0-4): ");
     }
 
     private void mainMenuUser() {
@@ -80,6 +80,21 @@ public class MyApp {
         System.out.println("0. Exit");
         System.out.println();
         System.out.print("Enter option (0-5): ");
+    }
+
+    private void adminpanelMenu() {
+        System.out.println();
+        System.out.println("Select option:");
+        System.out.println("1. Get all users");
+        System.out.println("2. Get user by id");
+        System.out.println("3. Create user");
+        System.out.println("4. Delete user");
+        System.out.println("5. Get all users with transactions");
+        System.out.println("6. Get all transactions");
+        System.out.println("7. Get all deposits");
+        System.out.println("0. Go back");
+        System.out.println();
+        System.out.print("Enter option (0-7): ");
     }
 
     private void depositsMenu() {
@@ -189,6 +204,11 @@ public class MyApp {
         System.out.println(responce);
     }
 
+    public void getAllDepositsMenu() {
+        String response = depCont.getAllDeposits();
+        System.out.println(response);
+    }
+
     public void createDepositMenu(){
         System.out.println("Insert a type of deposit(1-2)");
         int type = sc.nextInt();
@@ -222,6 +242,31 @@ public class MyApp {
         int amount = sc.nextInt();
         String responce = depCont.withdrawDeposit(id, currentUserId, amount);
         System.out.println(responce);
+    }
+
+    public void adminpanel(){
+        while (true) {
+            adminpanelMenu();
+            try {
+                int option = sc.nextInt();
+
+                switch (option){
+                    case 1: getAllUsersMenu(); break;
+                    case 2: getUserMenu(); break;
+                    case 3: createUserMenu(); break;
+                    case 4: deleteUserMenu(); break;
+                    case 5: getUsersWithTransactionsMenu(); break;
+                    case 6: getAllTransactions_adminMenu(); break;
+                    case 7: getAllDepositsMenu(); break;
+                    default: return;
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Input must be integer: " + e);
+                sc.nextLine();
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
     }
 
     public void deposits(){
@@ -292,13 +337,10 @@ public class MyApp {
                 int option = sc.nextInt();
 
                 switch (option){
-                    case 1: getAllUsersMenu(); break;
-                    case 2: getUserMenu(); break;
-                    case 3: startTransactionMenu(); break;
-                    case 4: getAllTransactions_userMenu(); break;
-                    case 5: createUserMenu(); break;
-                    case 6: deleteUserMenu(); break;
-                    case 9: getUsersWithTransactionsMenu(); break;
+                    case 1: getMyInfo(); break;
+                    case 2: transactions(); break;
+                    case 3: deposits(); break;
+                    case 4: adminpanel(); break;
                     default: return;
                 }
             } catch (InputMismatchException e) {

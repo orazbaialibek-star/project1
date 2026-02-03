@@ -10,6 +10,7 @@ public interface IDepositRepository {
     boolean replenishDeposit(int id, int userid, int amount);
     boolean withdrawDeposit(int id, int userid, int amount);
     List<Deposit> getAllMyDeposits(int id);
+    List<Deposit> getAllDeposits();
     int checkBalanceUser(int userid);
     int checkBalanceDeposit(int id);
 }

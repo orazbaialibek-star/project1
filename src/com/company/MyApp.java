@@ -294,8 +294,8 @@ public class MyApp {
                 switch (option){
                     case 1: getAllUsersMenu(); break;
                     case 2: getUserMenu(); break;
-                    case 3: getTransactionMenu(); break;
-                    case 4: getAllTransactionsMenu(); break;
+                    case 3: startTransactionMenu(); break;
+                    case 4: getAllTransactions_userMenu(); break;
                     case 5: createUserMenu(); break;
                     case 6: deleteUserMenu(); break;
                     case 9: getUsersWithTransactionsMenu(); break;

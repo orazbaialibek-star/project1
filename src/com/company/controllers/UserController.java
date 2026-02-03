@@ -26,9 +26,7 @@ public class UserController implements IUserController {
         List<User> users = repo.getAllUsers();
 
         StringBuilder response = new StringBuilder();
-        for (User user : users) {
-            response.append(user.toString()).append("\n");
-        }
+        users.forEach(user -> response.append(user).append("\n"));
 
         return response.toString();
     }
@@ -43,5 +41,14 @@ public class UserController implements IUserController {
         boolean deleted = repo.deleteUser(id);
 
         return (deleted ? "User was deleted successfully!" : "User deletion failed!");
+    }
+
+    public String getUsersWithTransactions(){
+        List<String> userswithtrans = repo.getUsersWithTransactions();
+
+        StringBuilder response = new StringBuilder();
+        userswithtrans.forEach(user -> response.append(user).append("\n"));
+
+        return response.toString();
     }
 }

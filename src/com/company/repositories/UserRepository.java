@@ -118,4 +118,37 @@ public class UserRepository implements IUserRepository {
             return false;
         }
     }
-}
+        public List<String> getUsersWithTransactions() {
+            Connection con = null;
+
+            try {
+                con = db.getConnection();
+
+                String sql =
+                        "SELECT u.name, u.surname, t.amount "+
+                                "FROM users u " +
+                                "JOIN transactions t ON u.id = t.userfromid";
+
+                Statement st = con.createStatement();
+                ResultSet rs = st.executeQuery(sql);
+
+                List<String> result = new ArrayList<>();
+
+                while (rs.next()) {
+                    result.add(
+                            "User: " + rs.getString("name") + " " +
+                                    rs.getString("surname") +
+                                    ", amount: " + rs.getDouble("amount")
+                    );
+                }
+
+                return result;
+
+            } catch (SQLException e) {
+                System.out.println("SQL error (JOIN): " + e.getMessage());
+            }
+
+            return new ArrayList<>();
+        }
+    }
+

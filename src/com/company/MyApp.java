@@ -78,6 +78,11 @@ public class MyApp {
         System.out.println(response);
     }
 
+    public void getUsersWithTransactionsMenu(){
+        String responce = userCont.getUsersWithTransactions();
+        System.out.println(responce);
+    }
+
     public void getUserMenu() {
         System.out.println("Please enter id");
         int id = sc.nextInt();
@@ -159,6 +164,7 @@ public class MyApp {
                     case 4: getAllTransactionsMenu(); break;
                     case 5: createUserMenu(); break;
                     case 6: deleteUserMenu(); break;
+                    case 9: getUsersWithTransactionsMenu(); break;
                     default: return;
                 }
             } catch (InputMismatchException e) {

@@ -41,7 +41,7 @@ public class DepositController implements IDepositController {
 
         int currentBalance = repo.checkBalanceUser(userid);
 
-        if (currentBalance > balance){
+        if (currentBalance < balance){
             return "Insufficient funds";
         }
 

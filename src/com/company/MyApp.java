@@ -210,7 +210,7 @@ public class MyApp {
     }
 
     public void createDepositMenu(){
-        System.out.println("Insert a type of deposit(1-2)");
+        System.out.println("Insert a type of deposit(1 for 14.9% - 2 for 10.9%)");
         int type = sc.nextInt();
         System.out.println("Insert a balance");
         int balance = sc.nextInt();

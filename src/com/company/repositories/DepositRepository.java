@@ -50,7 +50,7 @@ public class DepositRepository implements IDepositRepository {
 
         try {
             con = db.getConnection();
-            String sql = "SELECT id,userid,percentage,balance FROM deposits WHERE userid = ?";
+            String sql = "SELECT id,userid,percentage,balance FROM deposits";
             Statement st = con.createStatement();
 
             ResultSet rs = st.executeQuery(sql);

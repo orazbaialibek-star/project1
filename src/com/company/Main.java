@@ -4,10 +4,12 @@ import com.company.controllers.AuthorisationController;
 import com.company.controllers.DepositController;
 import com.company.controllers.TransactionController;
 import com.company.controllers.UserController;
+import com.company.controllers.CategoryController;
 import com.company.controllers.interfaces.IAuthorisationController;
 import com.company.controllers.interfaces.IDepositController;
 import com.company.controllers.interfaces.ITransactionController;
 import com.company.controllers.interfaces.IUserController;
+import com.company.controllers.interfaces.ICategoryController;
 import com.company.data.PostgresDB;
 import com.company.data.interfaces.IDB;
 import com.company.repositories.AuthorisaionRepository;
@@ -18,6 +20,9 @@ import com.company.repositories.interfaces.IAuthorisationRepository;
 import com.company.repositories.interfaces.IDepositRepository;
 import com.company.repositories.interfaces.ITransactionRepository;
 import com.company.repositories.interfaces.IUserRepository;
+import com.company.repositories.CategoryRepository;
+import com.company.repositories.interfaces.ICategoryRepository;
+
 
 public class Main {
     public static void main(String[] args){
@@ -30,8 +35,12 @@ public class Main {
         IAuthorisationController controller3 = new AuthorisationController(repo3);
         IDepositRepository repo4 = new DepositRepository(db);
         IDepositController controller4 = new DepositController(repo4);
+        ICategoryRepository repo5 = new CategoryRepository(db);
+        ICategoryController controller5 = new CategoryController(repo5);
 
-        MyApp app = new MyApp(controller1, controller2, controller3, controller4);
+
+
+        MyApp app = new MyApp(controller1, controller2, controller3, controller4, controller5);
 
         app.launch();
 

@@ -4,6 +4,7 @@ import com.company.controllers.interfaces.IAuthorisationController;
 import com.company.controllers.interfaces.IDepositController;
 import com.company.controllers.interfaces.IUserController;
 import com.company.controllers.interfaces.ITransactionController;
+import com.company.controllers.interfaces.ICategoryController;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -19,15 +20,19 @@ public class MyApp {
 
     private final IDepositController depCont;
 
+    private final ICategoryController catCont;
+
+
     public int currentUserId = 0;
     public String currentLogin = "NONDEFINED";
     public int currentUserRole = 0;
 
-    public MyApp(IUserController userCont, ITransactionController transCont, IAuthorisationController authCont, IDepositController depCont) {
+    public MyApp(IUserController userCont, ITransactionController transCont, IAuthorisationController authCont, IDepositController depCont, ICategoryController catCont) {
         this.userCont = userCont;
         this.transCont = transCont;
         this.authCont = authCont;
         this.depCont = depCont;
+        this.catCont = catCont;
     }
 
     public void authorisation(){
@@ -92,6 +97,7 @@ public class MyApp {
         System.out.println("5. Get all users with transactions");
         System.out.println("6. Get all transactions");
         System.out.println("7. Get all deposits");
+        System.out.println("8. View all categories");
         System.out.println("0. Go back");
         System.out.println();
         System.out.print("Enter option (0-7): ");
@@ -243,6 +249,17 @@ public class MyApp {
         String responce = depCont.withdrawDeposit(id, currentUserId, amount);
         System.out.println(responce);
     }
+    public void getAllCategoriesMenu() {
+        System.out.println("=== Categories ===");
+        try {
+            catCont.getAllCategories().forEach(cat ->
+                    System.out.println("ID: " + cat.getId() + ", Name: " + cat.getName())
+            );
+        } catch (Exception e) {
+            System.out.println("Error fetching categories: " + e.getMessage());
+        }
+    }
+
 
     public void adminpanel(){
         while (true) {
@@ -258,6 +275,7 @@ public class MyApp {
                     case 5: getUsersWithTransactionsMenu(); break;
                     case 6: getAllTransactions_adminMenu(); break;
                     case 7: getAllDepositsMenu(); break;
+                    case 8: getAllCategoriesMenu(); break;
                     default: return;
                 }
             } catch (InputMismatchException e) {

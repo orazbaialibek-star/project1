@@ -11,7 +11,7 @@ public class Category {
     @Column(nullable = false, unique = true)
     private String name;
 
-    // Конструкторы
+    
     public Category() {}
     public Category(String name) {
         this.name = name;
@@ -28,4 +28,4 @@ public class Category {
         return "Category{id=" + id + ", name='" + name + "'}";
     }
 }
-// Написал Магауин Мади
+

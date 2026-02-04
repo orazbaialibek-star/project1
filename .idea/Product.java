@@ -1,5 +1,5 @@
 package org.example;
-// это клас должен быть помещен уже существующий файл
+
 @ManyToOne(fetch = FetchType.LAZY)
 @JoinColumn(name = "category_id")
 private Category category;
@@ -14,4 +14,4 @@ public String toString() {
     return "Product{id=" + id + ", name='" + name + "', price=" + price +
             ", category=" + (category != null ? category.getName() : "null") + "}";
 }
-// Написал Магауин Мади
+

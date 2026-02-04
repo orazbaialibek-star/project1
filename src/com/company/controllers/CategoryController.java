@@ -16,6 +16,9 @@ public class CategoryController implements ICategoryController {
 
     public String getAllCategories() {
         List<Category> categories = repo.getAllCategories();
+        if (categories == null) {
+            return "Error fetching categories";
+        }
 
         StringBuilder response = new StringBuilder();
         for (Category category : categories) {
@@ -33,6 +36,6 @@ public class CategoryController implements ICategoryController {
         Category category = new Category(name);
         boolean created = repo.createCategory(category);
 
-        return (created ? "Category created" : "An error occured");
+        return (created ? "Category created" : "An error occurred");
     }
 }

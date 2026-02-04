@@ -53,6 +53,6 @@ public class TransactionController implements ITransactionController {
 
         boolean created = repo.userTransaction(trans);
 
-        return (created ? "Transaction occured successfully" : "Transaction failed");
+        return (created ? "Transaction occurred successfully" : "Transaction failed");
     }
 }

@@ -41,24 +41,24 @@ public class MyApp {
         System.out.println("Please enter the password");
         String password = sc.next();
 
-        String responce1 = authCont.checkLogPas(login, password);
-        int responce2 = authCont.checkRole(login);
-        int responce3 = authCont.checkId(login);
-        System.out.println(responce1);
-        if (responce1 !=null){
+        String response1 = authCont.checkLogPas(login, password);
+        int response2 = authCont.checkRole(login);
+        int response3 = authCont.checkId(login);
+        System.out.println(response1);
+        if (response1 !=null){
             currentLogin = login;
-            currentUserId = responce3;
-            if (responce2 == 1){
+            currentUserId = response3;
+            if (response2 == 1){
                 currentUserRole = 1;
                 launchForAdmin();
             }
-            if (responce2 == 2){
+            if (response2 == 2){
                 currentUserRole = 2;
                 launchForUser();
             }
-            System.out.println(responce1 + currentUserId);
-        } if (responce1 == null){
-            System.out.println("An error occured");
+            System.out.println(response1 + currentUserId);
+        } if (response1 == null){
+            System.out.println("An error occurred");
         }
     }
 
@@ -84,7 +84,7 @@ public class MyApp {
         System.out.println("3. Go to deposits");
         System.out.println("0. Exit");
         System.out.println();
-        System.out.print("Enter option (0-5): ");
+        System.out.print("Enter option (0-3): ");
     }
 
     private void adminpanelMenu() {
@@ -100,7 +100,7 @@ public class MyApp {
         System.out.println("8. View all categories");
         System.out.println("0. Go back");
         System.out.println();
-        System.out.print("Enter option (0-7): ");
+        System.out.print("Enter option (0-8): ");
     }
 
     private void depositsMenu() {
@@ -140,8 +140,8 @@ public class MyApp {
     }
 
     public void getUsersWithTransactionsMenu(){
-        String responce = userCont.getUsersWithTransactions();
-        System.out.println(responce);
+        String response = userCont.getUsersWithTransactions();
+        System.out.println(response);
     }
 
     public void getUserMenu() {
@@ -154,8 +154,8 @@ public class MyApp {
 
     public void getMyInfo(){
         int id = currentUserId;
-        String responce = userCont.getUser(id);
-        System.out.println(responce);
+        String response = userCont.getUser(id);
+        System.out.println(response);
     }
 
     public void startTransactionMenu(){
@@ -198,7 +198,7 @@ public class MyApp {
         String login = sc.next();
         System.out.println("Please enter the password");
         String password = sc.next();
-        System.out.println("Please enter the role(1 is for admin and 2 is for user");
+        System.out.println("Please enter the role (1 is for admin and 2 is for user)");
         int role = sc.nextInt();
 
         String response = userCont.createUser(name, surname, balance, login, password, role);
@@ -206,8 +206,8 @@ public class MyApp {
     }
 
     public void getAllMyDepositsMenu(){
-        String responce = depCont.getAllMyDeposits(currentUserId);
-        System.out.println(responce);
+        String response = depCont.getAllMyDeposits(currentUserId);
+        System.out.println(response);
     }
 
     public void getAllDepositsMenu() {
@@ -220,16 +220,16 @@ public class MyApp {
         int type = sc.nextInt();
         System.out.println("Insert a balance");
         int balance = sc.nextInt();
-        String responce = "NONDEFINED";
+        String response = "NONDEFINED";
         if (type == 1){
             double percentage = 14.9;
-            responce = depCont.createDeposit(currentUserId, percentage, balance);
+            response = depCont.createDeposit(currentUserId, percentage, balance);
         }
         if (type == 2){
             double percentage = 10.9;
-            responce = depCont.createDeposit(currentUserId, percentage, balance);
+            response = depCont.createDeposit(currentUserId, percentage, balance);
         }
-        System.out.println(responce);
+        System.out.println(response);
     }
 
     public void replenishDepositMenu(){
@@ -237,8 +237,8 @@ public class MyApp {
         int id = sc.nextInt();
         System.out.println("Insert an amount");
         int amount = sc.nextInt();
-        String responce = depCont.replenishDeposit(id, currentUserId, amount);
-        System.out.println(responce);
+        String response = depCont.replenishDeposit(id, currentUserId, amount);
+        System.out.println(response);
     }
 
     public void withdrawDepositMenu(){
@@ -246,15 +246,13 @@ public class MyApp {
         int id = sc.nextInt();
         System.out.println("Insert an amount");
         int amount = sc.nextInt();
-        String responce = depCont.withdrawDeposit(id, currentUserId, amount);
-        System.out.println(responce);
+        String response = depCont.withdrawDeposit(id, currentUserId, amount);
+        System.out.println(response);
     }
     public void getAllCategoriesMenu() {
         System.out.println("=== Categories ===");
         try {
-            catCont.getAllCategories().forEach(cat ->
-                    System.out.println("ID: " + cat.getId() + ", Name: " + cat.getName())
-            );
+            System.out.println(catCont.getAllCategories());
         } catch (Exception e) {
             System.out.println("Error fetching categories: " + e.getMessage());
         }

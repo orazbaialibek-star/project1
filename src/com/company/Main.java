@@ -12,7 +12,7 @@ import com.company.controllers.interfaces.IUserController;
 import com.company.controllers.interfaces.ICategoryController;
 import com.company.data.PostgresDB;
 import com.company.data.interfaces.IDB;
-import com.company.repositories.AuthorisaionRepository;
+import com.company.repositories.AuthorisationRepository;
 import com.company.repositories.DepositRepository;
 import com.company.repositories.TransactionRepository;
 import com.company.repositories.UserRepository;
@@ -31,7 +31,7 @@ public class Main {
         IUserController controller1 = new UserController(repo1);
         ITransactionRepository repo2 = new TransactionRepository(db);
         ITransactionController controller2 = new TransactionController(repo2);
-        IAuthorisationRepository repo3 = new AuthorisaionRepository(db);
+        IAuthorisationRepository repo3 = new AuthorisationRepository(db);
         IAuthorisationController controller3 = new AuthorisationController(repo3);
         IDepositRepository repo4 = new DepositRepository(db);
         IDepositController controller4 = new DepositController(repo4);

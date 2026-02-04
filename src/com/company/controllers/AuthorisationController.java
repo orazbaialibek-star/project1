@@ -21,7 +21,7 @@ public class AuthorisationController implements IAuthorisationController {
             role_text = "user";
         }
 
-        return (authorised ? "Logged in succssfully as " + log + " (" + role_text + ")" : null);
+        return (authorised ? "Logged in successfully as " + log + " (" + role_text + ")" : null);
     }
 
     public int checkRole(String login){

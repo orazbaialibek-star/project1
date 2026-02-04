@@ -47,7 +47,7 @@ public class DepositController implements IDepositController {
 
         boolean created = repo.createDeposit(deposit);
 
-        return (created ? "Deposit created" : "An error occured");
+        return (created ? "Deposit created" : "An error occurred");
     }
 
     public String replenishDeposit(int id, int userid, int amount){
@@ -59,7 +59,7 @@ public class DepositController implements IDepositController {
 
         boolean replenished = repo.replenishDeposit(id, userid, amount);
 
-        return (replenished ? "Replenished successfully" : "An error occured");
+        return (replenished ? "Replenished successfully" : "An error occurred");
     }
 
     public String withdrawDeposit(int id, int userid, int amount){
@@ -72,6 +72,6 @@ public class DepositController implements IDepositController {
 
         boolean withdrawn = repo.withdrawDeposit(id, userid, amount);
 
-        return (withdrawn ? "Withdrawn successfully" : "An error occured");
+        return (withdrawn ? "Withdrawn successfully" : "An error occurred");
     }
 }

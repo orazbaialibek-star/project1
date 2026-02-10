@@ -1,17 +1,21 @@
 package com.company.controllers;
 
 import com.company.controllers.interfaces.IDepositController;
+import com.company.controllers.interfaces.IUserController;
 import com.company.models.Deposit;
 import com.company.models.Transaction;
 import com.company.repositories.interfaces.IDepositRepository;
 import com.company.repositories.interfaces.ITransactionRepository;
+import com.company.repositories.interfaces.IUserRepository;
 
 import java.util.List;
 
 public class DepositController implements IDepositController {
     private final IDepositRepository repo;
-    public DepositController(IDepositRepository repo) { // Dependency Injection
+    private final IUserRepository repoU;
+    public DepositController(IDepositRepository repo, IUserRepository repoU) { // Dependency Injection
         this.repo = repo;
+        this.repoU = repoU;
     }
 
     public String getAllMyDeposits(int id){
@@ -39,7 +43,7 @@ public class DepositController implements IDepositController {
     public String createDeposit(int userid, double percentage, int balance){
         Deposit deposit = new Deposit(userid, percentage, balance);
 
-        int currentBalance = repo.checkBalanceUser(userid);
+        int currentBalance = repoU.checkBalance(userid);
 
         if (currentBalance < balance){
             return "Insufficient funds";
@@ -51,7 +55,7 @@ public class DepositController implements IDepositController {
     }
 
     public String replenishDeposit(int id, int userid, int amount){
-        int currentBalanceU = repo.checkBalanceUser(userid);
+        int currentBalanceU = repoU.checkBalance(userid);
 
         if (currentBalanceU < amount){
             return "Insufficient funds";

@@ -10,4 +10,5 @@ public interface IUserRepository {
     boolean deleteUser(int id);
     boolean createUser(User user);
     List<String> getUsersWithTransactions();
+    int checkBalance(int id);
 }

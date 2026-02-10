@@ -3,14 +3,17 @@ package com.company.controllers;
 import com.company.controllers.interfaces.ITransactionController;
 import com.company.models.Transaction;
 import com.company.repositories.interfaces.ITransactionRepository;
+import com.company.repositories.interfaces.IUserRepository;
 
 
 import java.util.List;
 
 public class TransactionController implements ITransactionController {
     private final ITransactionRepository repo;
-    public TransactionController(ITransactionRepository repo) { // Dependency Injection
+    public final IUserRepository repoU;
+    public TransactionController(ITransactionRepository repo, IUserRepository repo2) { // Dependency Injection
         this.repo = repo;
+        this.repoU = repo2;
     }
 
     public String getAllTransactions_admin() {
@@ -45,7 +48,7 @@ public class TransactionController implements ITransactionController {
             return "Amount cannot be less or equal to 0";
         }
 
-        int balance = repo.checkBalance(user1);
+        int balance = repoU.checkBalance(user1);
 
         if (amount > balance){
             return "Insufficient funds";

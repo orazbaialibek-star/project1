@@ -26,16 +26,16 @@ public class Main {
         db.setUsername("postgres");
         db.setPassword("0000");
         db.setDbName("project1");
-        IUserRepository repo1 = new UserRepository(db);
-        IUserController controller1 = new UserController(repo1);
-        ITransactionRepository repo2 = new TransactionRepository(db);
-        ITransactionController controller2 = new TransactionController(repo2);
-        IAuthorisationRepository repo3 = new AuthorisaionRepository(db);
-        IAuthorisationController controller3 = new AuthorisationController(repo3);
-        IDepositRepository repo4 = new DepositRepository(db);
-        IDepositController controller4 = new DepositController(repo4);
+        IUserRepository repoU= new UserRepository(db);
+        IUserController controllerU = new UserController(repoU);
+        ITransactionRepository repoT = new TransactionRepository(db);
+        ITransactionController controllerT = new TransactionController(repoT, repoU);
+        IAuthorisationRepository repoAuth = new AuthorisaionRepository(db);
+        IAuthorisationController controllerAuth = new AuthorisationController(repoAuth);
+        IDepositRepository repoDep = new DepositRepository(db);
+        IDepositController controllerDep = new DepositController(repoDep, repoU);
 
-        MyApp app = new MyApp(controller1, controller2, controller3, controller4);
+        MyApp app = new MyApp(controllerU, controllerT, controllerAuth, controllerDep);
 
         app.launch();
 

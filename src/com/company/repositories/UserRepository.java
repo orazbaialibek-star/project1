@@ -87,6 +87,8 @@ public class UserRepository implements IUserRepository {
                         UserBuilder(rs.getInt("id"), rs.getString("name"), rs.getString("surname"))
                         .WithBalance(rs.getInt("balance"))
                         .WithLogin(rs.getString("login"))
+                        .WithPassword(rs.getString("password"))
+                        .WithRole(rs.getInt("role"))
                         .build();
             }
         } catch (SQLException e) {

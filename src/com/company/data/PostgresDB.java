@@ -11,11 +11,10 @@ public class PostgresDB implements IDB {
 
     private Connection connection;
 
-    public PostgresDB(String host, String username, String password, String dbName) {
-        setHost(host);
-        setUsername(username);
-        setPassword(password);
-        setDbName(dbName);
+    public static PostgresDB instance = new PostgresDB();
+
+    private PostgresDB() {
+
     }
 
     @Override

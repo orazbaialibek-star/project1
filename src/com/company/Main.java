@@ -21,7 +21,11 @@ import com.company.repositories.interfaces.IUserRepository;
 
 public class Main {
     public static void main(String[] args){
-        IDB db = new PostgresDB("jdbc:postgresql://localhost:5432", "postgres", "0000", "project1");
+        PostgresDB db = PostgresDB.instance;
+        db.setHost("jdbc:postgresql://localhost:5432");
+        db.setUsername("postgres");
+        db.setPassword("0000");
+        db.setDbName("project1");
         IUserRepository repo1 = new UserRepository(db);
         IUserController controller1 = new UserController(repo1);
         ITransactionRepository repo2 = new TransactionRepository(db);

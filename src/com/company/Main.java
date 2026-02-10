@@ -31,7 +31,7 @@ public class Main {
         ITransactionRepository repoT = new TransactionRepository(db);
         ITransactionController controllerT = new TransactionController(repoT, repoU);
         IAuthorisationRepository repoAuth = new AuthorisaionRepository(db);
-        IAuthorisationController controllerAuth = new AuthorisationController(repoAuth);
+        IAuthorisationController controllerAuth = new AuthorisationController(repoAuth, repoU);
         IDepositRepository repoDep = new DepositRepository(db);
         IDepositController controllerDep = new DepositController(repoDep, repoU);
 

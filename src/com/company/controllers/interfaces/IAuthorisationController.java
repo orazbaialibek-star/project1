@@ -1,8 +1,8 @@
 package com.company.controllers.interfaces;
 
 public interface IAuthorisationController {
-    String checkLogPas(String login, String password);
-    int checkRole(String login);
-    String checkLogin(String login);
-    public int checkId(String login);
+    String authorisation(String login, String password);
+    int getRole(String login);
+    String getFullName(String login);
+    int getId(String login);
 }

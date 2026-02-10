@@ -20,7 +20,7 @@ public class MyApp {
     private final IDepositController depCont;
 
     public int currentUserId = 0;
-    public String currentLogin = "NONDEFINED";
+    public String currentName = "NONDEFINED";
     public int currentUserRole = 0;
 
     public MyApp(IUserController userCont, ITransactionController transCont, IAuthorisationController authCont, IDepositController depCont) {
@@ -36,12 +36,13 @@ public class MyApp {
         System.out.println("Please enter the password");
         String password = sc.next();
 
-        String responce1 = authCont.checkLogPas(login, password);
-        int responce2 = authCont.checkRole(login);
-        int responce3 = authCont.checkId(login);
+        String responce1 = authCont.authorisation(login, password);
+        int responce2 = authCont.getRole(login);
+        int responce3 = authCont.getId(login);
+        String responce4 = authCont.getFullName(login);
         System.out.println(responce1);
         if (responce1 !=null){
-            currentLogin = login;
+            currentName = responce4;
             currentUserId = responce3;
             if (responce2 == 1){
                 currentUserRole = 1;
@@ -59,7 +60,7 @@ public class MyApp {
 
     private void mainMenuAdmin() {
         System.out.println();
-        System.out.println("Welcome, " + currentLogin);
+        System.out.println("Welcome, " + currentName);
         System.out.println("Select option:");
         System.out.println("1. Get my info");
         System.out.println("2. Go to transactions");
@@ -72,7 +73,7 @@ public class MyApp {
 
     private void mainMenuUser() {
         System.out.println();
-        System.out.println("Welcome, " + currentLogin);
+        System.out.println("Welcome, " + currentName);
         System.out.println("Select option:");
         System.out.println("1. Get my info");
         System.out.println("2. Go to transactions");

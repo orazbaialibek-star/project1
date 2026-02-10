@@ -11,4 +11,7 @@ public interface IUserRepository {
     boolean createUser(User user);
     List<String> getUsersWithTransactions();
     int checkBalance(int id);
+    int getRole(String login);
+    String getFullName(String login);
+    int getId(String login);
 }

@@ -15,6 +15,14 @@ public class UserRepository implements IUserRepository {
         this.db = db;
     }
 
+    public int role;
+
+    public String name;
+
+    public String surname;
+
+    public int id;
+
     @Override
     public List<User> getAllUsers() {
         Connection con = null;
@@ -174,5 +182,74 @@ public class UserRepository implements IUserRepository {
 
         return 0;
     }
+    public int getId(String login){
+        Connection con = null;
+
+        try {
+
+            con = db.getConnection();
+            String sql1 = "SELECT id FROM users WHERE login=?";
+            PreparedStatement st1 = con.prepareStatement(sql1);
+
+            st1.setString(1,login);
+
+            ResultSet rs1 = st1.executeQuery();
+
+            if(rs1.next()){
+                id = rs1.getInt("id");
+            }
+        } catch (SQLException e) {
+            System.out.println("sql error: " + e.getMessage());
+            return 0;
+        }
+        return id;
     }
+
+    public int getRole(String login){
+        Connection con = null;
+
+        try {
+
+            con = db.getConnection();
+            String sql1 = "SELECT role FROM users WHERE login=?";
+            PreparedStatement st1 = con.prepareStatement(sql1);
+
+            st1.setString(1,login);
+
+            ResultSet rs1 = st1.executeQuery();
+
+            if(rs1.next()){
+                role = rs1.getInt("role");
+            }
+        } catch (SQLException e) {
+            System.out.println("sql error: " + e.getMessage());
+            return 0;
+        }
+        return role;
+    }
+
+    public String getFullName(String login){
+        Connection con = null;
+
+        try {
+
+            con = db.getConnection();
+            String sql1 = "SELECT name, surname FROM users WHERE login=?";
+            PreparedStatement st1 = con.prepareStatement(sql1);
+
+            st1.setString(1,login);
+
+            ResultSet rs1 = st1.executeQuery();
+
+            if(rs1.next()){
+                name = rs1.getString("name");
+                surname = rs1.getString("surname");
+            }
+        } catch (SQLException e) {
+            System.out.println("sql error: " + e.getMessage());
+            return null;
+        }
+        return name + " " + surname;
+    }
+}
 

@@ -2,18 +2,21 @@ package com.company.controllers;
 
 import com.company.controllers.interfaces.IAuthorisationController;
 import com.company.repositories.interfaces.IAuthorisationRepository;
+import com.company.repositories.interfaces.IUserRepository;
 
 public class AuthorisationController implements IAuthorisationController {
     private final IAuthorisationRepository repo;
+    private final IUserRepository repoU;
 
-    public AuthorisationController(IAuthorisationRepository repo) { // Dependency Injection
+    public AuthorisationController(IAuthorisationRepository repo, IUserRepository repoU) { // Dependency Injection
         this.repo = repo;
+        this.repoU = repoU;
     }
 
-    public String checkLogPas(String login, String password){
-        boolean authorised = repo.checkLogPas(login, password);
-        String log = repo.checkLogin(login);
-        int role = repo.checkRole(login);
+    public String authorisation(String login, String password){
+        boolean authorised = repo.authorisation(login, password);
+        String log = repoU.getFullName(login);
+        int role = repoU.getRole(login);
         String role_text = "NONDEFINED";
         if(role == 1){
             role_text = "admin";
@@ -24,20 +27,20 @@ public class AuthorisationController implements IAuthorisationController {
         return (authorised ? "Logged in succssfully as " + log + " (" + role_text + ")" : null);
     }
 
-    public int checkRole(String login){
-        int role = repo.checkRole(login);
+    public int getRole(String login){
+        int role = repoU.getRole(login);
 
         return role;
     }
     
-    public String checkLogin(String login){
-        String log = repo.checkLogin(login);
+    public String getFullName(String login){
+        String fullName = repoU.getFullName(login);
         
-        return log;
+        return fullName;
     }
 
-    public int checkId(String login){
-        int id = repo.checkId(login);
+    public int getId(String login){
+        int id = repoU.getId(login);
 
         return id;
     }

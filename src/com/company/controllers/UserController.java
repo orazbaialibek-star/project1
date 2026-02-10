@@ -16,6 +16,12 @@ public class UserController implements IUserController {
     }
 
     public String createUser(String name, String surname, double balance, String login, String password, int role) {
+        String existing_log = repo.getLogin(login);
+
+        if (existing_log != null){
+            return "User with such login already exists";
+        }
+
         User user = new User.UserBuilder(name, surname).WithBalance(balance).WithLogin(login).WithPassword(password).WithRole(role).build();
 
         boolean created = repo.createUser(user);

@@ -21,9 +21,10 @@ public class UserRepository implements IUserRepository {
 
     public String surname;
 
+    public String login;
+
     public int id;
 
-    @Override
     public List<User> getAllUsers() {
         Connection con = null;
 
@@ -51,7 +52,6 @@ public class UserRepository implements IUserRepository {
         return null;
     }
 
-    @Override
     public boolean createUser(User user) {
         Connection con = null;
 
@@ -77,7 +77,6 @@ public class UserRepository implements IUserRepository {
         return false;
     }
 
-    @Override
     public User getUser(int id){
         Connection con = null;
 
@@ -105,7 +104,7 @@ public class UserRepository implements IUserRepository {
 
         return null;
     }
-    @Override
+
     public boolean deleteUser(int id) {
         Connection con = null;
 
@@ -128,38 +127,38 @@ public class UserRepository implements IUserRepository {
             return false;
         }
     }
-        public List<String> getUsersWithTransactions() {
-            Connection con = null;
 
-            try {
-                con = db.getConnection();
+    public List<String> getUsersWithTransactions() {
+        Connection con = null;
 
-                String sql =
-                        "SELECT u.name, u.surname, t.amount "+
-                                "FROM users u " +
-                                "JOIN transactions t ON u.id = t.userfromid";
+        try {
+            con = db.getConnection();
 
-                Statement st = con.createStatement();
-                ResultSet rs = st.executeQuery(sql);
+            String sql =
+                    "SELECT u.name, u.surname, t.amount "+
+                            "FROM users u " +
+                            "JOIN transactions t ON u.id = t.userfromid";
 
-                List<String> result = new ArrayList<>();
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
 
-                while (rs.next()) {
-                    result.add(
-                            "User: " + rs.getString("name") + " " +
-                                    rs.getString("surname") +
-                                    ", amount: " + rs.getDouble("amount")
-                    );
-                }
+            List<String> result = new ArrayList<>();
 
-                return result;
-
-            } catch (SQLException e) {
-                System.out.println("SQL error (JOIN): " + e.getMessage());
+            while (rs.next()) {
+                result.add(
+                        "User: " + rs.getString("name") + " " +
+                                rs.getString("surname") +
+                                ", amount: " + rs.getDouble("amount")
+                );
             }
+            return result;
 
-            return new ArrayList<>();
+        } catch (SQLException e) {
+            System.out.println("SQL error (JOIN): " + e.getMessage());
         }
+
+        return new ArrayList<>();
+    }
 
     public int checkBalance(int id){
         Connection con = null;
@@ -250,6 +249,31 @@ public class UserRepository implements IUserRepository {
             return null;
         }
         return name + " " + surname;
+    }
+
+    public String getLogin(String login){
+        Connection con = null;
+
+        try {
+
+            con = db.getConnection();
+            String sql1 = "SELECT login FROM users WHERE login=?";
+            PreparedStatement st1 = con.prepareStatement(sql1);
+
+            st1.setString(1,login);
+
+            ResultSet rs1 = st1.executeQuery();
+
+            if(rs1.next()){
+                login = rs1.getString("login");
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            System.out.println("sql error: " + e.getMessage());
+            return null;
+        }
+        return login;
     }
 }
 

@@ -166,28 +166,6 @@ public class DepositRepository implements IDepositRepository {
         return false;
     }
 
-//    public int checkBalanceUser(int userid){
-//        Connection con = null;
-//
-//        try {
-//            con = db.getConnection();
-//            String sql = "SELECT balance FROM users WHERE id=?";
-//            PreparedStatement st = con.prepareStatement(sql);
-//
-//            st.setInt(1,userid);
-//
-//            ResultSet rs = st.executeQuery();
-//
-//            if(rs.next()){
-//                return rs.getInt("balance");
-//            }
-//        } catch (SQLException e) {
-//            System.out.println("sql error: " + e.getMessage());
-//        }
-//
-//        return 0;
-//    }
-
     public int checkBalanceDeposit(int id){
         Connection con = null;
 

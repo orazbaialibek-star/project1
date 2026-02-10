@@ -110,25 +110,4 @@ public class TransactionRepository implements ITransactionRepository {
 
         return null;
     }
-//    public int checkBalance(int id){
-//        Connection con = null;
-//
-//        try {
-//            con = db.getConnection();
-//            String sql = "SELECT balance FROM users WHERE id=?";
-//            PreparedStatement st = con.prepareStatement(sql);
-//
-//            st.setInt(1,id);
-//
-//            ResultSet rs = st.executeQuery();
-//
-//            if(rs.next()){
-//                return rs.getInt("balance");
-//            }
-//        } catch (SQLException e) {
-//            System.out.println("sql error: " + e.getMessage());
-//        }
-//
-//        return 0;
-//    }
 }

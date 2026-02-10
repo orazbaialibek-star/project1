@@ -58,6 +58,22 @@ public class MyApp {
         }
     }
 
+    public void createAccMenu() {
+        System.out.println("Please enter name");
+        String name = sc.next();
+        System.out.println("Please enter surname");
+        String surname = sc.next();
+        System.out.println("Please enter the login");
+        String login = sc.next();
+        System.out.println("Please enter the password");
+        String password = sc.next();
+        System.out.println("Please enter the role(1 is for admin and 2 is for user)");
+        int role = sc.nextInt();
+
+        String response = authCont.createNewAcc(name, surname, login, password, role);
+        System.out.println(response);
+    }
+
     private void mainMenuAdmin() {
         System.out.println();
         System.out.println("Welcome, " + currentName);
@@ -124,6 +140,7 @@ public class MyApp {
         System.out.println();
         System.out.println("Welcome to MyBank");
         System.out.println("1. Log-in");
+        System.out.println("2. Create new account");
         System.out.println("0. Exit");
         System.out.println();
         System.out.print("Enter option (0-1): ");
@@ -193,7 +210,7 @@ public class MyApp {
         String login = sc.next();
         System.out.println("Please enter the password");
         String password = sc.next();
-        System.out.println("Please enter the role(1 is for admin and 2 is for user");
+        System.out.println("Please enter the role(1 is for admin and 2 is for user)");
         int role = sc.nextInt();
 
         String response = userCont.createUser(name, surname, balance, login, password, role);
@@ -320,6 +337,7 @@ public class MyApp {
 
                 switch (option){
                     case 1: authorisation(); break;
+                    case 2: createAccMenu(); break;
                     default: return;
                 }
             } catch (InputMismatchException e) {

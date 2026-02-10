@@ -14,4 +14,5 @@ public interface IUserRepository {
     int getRole(String login);
     String getFullName(String login);
     int getId(String login);
+    String getLogin(String login);
 }

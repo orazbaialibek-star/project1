@@ -1,6 +1,7 @@
 package com.company.controllers;
 
 import com.company.controllers.interfaces.IAuthorisationController;
+import com.company.models.User;
 import com.company.repositories.interfaces.IAuthorisationRepository;
 import com.company.repositories.interfaces.IUserRepository;
 
@@ -25,6 +26,20 @@ public class AuthorisationController implements IAuthorisationController {
         }
 
         return (authorised ? "Logged in succssfully as " + log + " (" + role_text + ")" : null);
+    }
+
+    public String createNewAcc(String name, String surname, String login, String password, int role) {
+        String existing_log = repoU.getLogin(login);
+
+        if (existing_log != null){
+            return "User with such login already exists";
+        }
+
+        User user = new User.UserBuilder(name, surname).WithLogin(login).WithPassword(password).WithRole(role).build();
+
+        boolean created = repoU.createUser(user);
+
+        return (created ? "Created a new account, now you can log-in!" : "Something went wrong :(");
     }
 
     public int getRole(String login){

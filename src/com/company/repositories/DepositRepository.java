@@ -166,7 +166,7 @@ public class DepositRepository implements IDepositRepository {
         return false;
     }
 
-    public int checkBalanceDeposit(int id){
+    public int getBalanceDeposit(int id){
         Connection con = null;
 
         try {

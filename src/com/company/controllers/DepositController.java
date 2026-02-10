@@ -1,11 +1,8 @@
 package com.company.controllers;
 
 import com.company.controllers.interfaces.IDepositController;
-import com.company.controllers.interfaces.IUserController;
 import com.company.models.Deposit;
-import com.company.models.Transaction;
 import com.company.repositories.interfaces.IDepositRepository;
-import com.company.repositories.interfaces.ITransactionRepository;
 import com.company.repositories.interfaces.IUserRepository;
 
 import java.util.List;
@@ -68,7 +65,7 @@ public class DepositController implements IDepositController {
 
     public String withdrawDeposit(int id, int userid, int amount){
 
-        int currentBalanceD = repo.checkBalanceDeposit(id);
+        int currentBalanceD = repo.getBalanceDeposit(id);
 
         if (currentBalanceD > amount){
             return "Insufficient funds in deposit";
